@@ -1,6 +1,8 @@
 package com.lothrazar.pickybags;
 
-import com.lothrazar.pickybags.item.CraftingSlabContainer;
+import com.lothrazar.pickybags.item.BagsMenuRegistry;
+import com.lothrazar.pickybags.item.ModBagsRegistry;
+import com.lothrazar.pickybags.item.slab.CraftingSlabContainer;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;

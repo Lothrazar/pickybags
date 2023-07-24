@@ -1,4 +1,4 @@
-package com.lothrazar.pickybags.item;
+package com.lothrazar.pickybags.item.slab;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;

@@ -1,4 +1,4 @@
-package com.lothrazar.pickybags.item;
+package com.lothrazar.pickybags.item.slab;
 
 import com.lothrazar.library.item.ItemFlib;
 import net.minecraft.server.level.ServerPlayer;
