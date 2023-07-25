@@ -3,7 +3,7 @@ package com.lothrazar.pickybags;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-import com.lothrazar.pickybags.item.ModBagsRegistry;
+import com.lothrazar.pickybags.item.pickup.PickupBagItem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,11 +24,12 @@ public class PickupEvents {
       int origCount = resultStack.getCount();
       for (Integer i : getAllBagSlots(player)) {
         resultStack = tryInsert(player.getInventory().getItem(i), resultStack);
+        // loopback 
         if (resultStack.isEmpty()) {
           break;
         }
       }
-      if (resultStack.getCount() != origCount) {
+      if (resultStack.getCount() != origCount) { //eat it
         itemEntity.setItem(resultStack);
         event.setResult(Result.ALLOW);
       }
@@ -36,6 +37,9 @@ public class PickupEvents {
   }
 
   public static ItemStack tryInsert(ItemStack bag, ItemStack itemPickup) {
+    if (!isBag(bag) || !canInsert(bag, itemPickup)) {
+      return itemPickup; // bounce it back un-touched
+    }
     AtomicReference<ItemStack> returnStack = new AtomicReference<>(ItemHandlerHelper.copyStackWithSize(itemPickup, itemPickup.getCount()));
     bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(ih -> {
       returnStack.set(ItemHandlerHelper.insertItem(ih, itemPickup, false));
@@ -53,7 +57,14 @@ public class PickupEvents {
     return slots;
   }
 
-  private static boolean isBag(ItemStack stack) {
-    return stack.getItem() == ModBagsRegistry.PICKUP.get();
+  private static boolean isBag(ItemStack bag) {
+    return bag.getItem() instanceof PickupBagItem;
+  }
+
+  private static boolean canInsert(ItemStack bag, ItemStack itemPickup) {
+    if (bag.getItem() instanceof PickupBagItem pu) {
+      return pu.canInsert(itemPickup);
+    }
+    return false;
   }
 }

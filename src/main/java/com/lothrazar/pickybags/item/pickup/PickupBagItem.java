@@ -32,4 +32,8 @@ public class PickupBagItem extends ItemFlib {
     }
     return super.use(worldIn, playerIn, handIn);
   }
+
+  public boolean canInsert(ItemStack itemPickup) {
+    return false; // TODO itemPickup.is(Tags.Items.COBBLESTONE) || itemPickup.is(Tags.Items.ORES);
+  }
 }
