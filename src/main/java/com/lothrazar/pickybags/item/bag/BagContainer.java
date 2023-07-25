@@ -1,40 +1,61 @@
 package com.lothrazar.pickybags.item.bag;
 
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.gui.ContainerFlib;
 import com.lothrazar.pickybags.item.BagsMenuRegistry;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class BagContainer extends ContainerFlib {
-  //  private final TransientCraftingContainer craftMatrix = new TransientCraftingContainer(this, 3, 3);
-  //  final ResultContainer craftResult = new ResultContainer();
 
-  //does NOT save inventory into the stack, very simple and plain
+  public ItemStack bag = ItemStack.EMPTY;
+  public int slot;
+
   public BagContainer(int id, Inventory playerInventory, Player player, int slot) {
     super(BagsMenuRegistry.BAG.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    //    this.endInv = 10;
-    //    this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
-    //    for (int i = 0; i < 3; i++) {
-    //      for (int j = 0; j < 3; j++) {
-    //        addSlot(new Slot(craftMatrix, j + i * 3, 30 + j * Const.SQ, 17 + i * Const.SQ));
-    //      }
-    //    }
-    layoutPlayerInventorySlots(8, 84);
+    if (player.getMainHandItem().getItem() instanceof BagItem) {
+      this.bag = player.getMainHandItem();
+      this.slot = player.getInventory().selected;
+    }
+    else if (player.getOffhandItem().getItem() instanceof BagItem) {
+      this.bag = player.getOffhandItem();
+      this.slot = 40;
+    }
+    else {
+      for (int x = 0; x < playerInventory.getContainerSize(); x++) {
+        ItemStack stack = playerInventory.getItem(x);
+        if (stack.getItem() instanceof BagItem) {
+          bag = stack;
+          slot = x;
+          break;
+        }
+      }
+    }
+    this.playerEntity = player;
+    this.playerInventory = playerInventory;
+    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+      this.endInv = h.getSlots();
+      final int numRows = 6;
+      for (int j = 0; j < numRows; ++j) {
+        for (int k = 0; k < 9; ++k) {
+          this.addSlot(new SlotItemHandler(h, k + j * 9,
+              8 + k * Const.SQ,
+              Const.SQ + j * Const.SQ));
+        }
+      }
+    });
+    layoutPlayerInventorySlots(8, 140);
   }
 
   @Override
   public void removed(Player playerIn) {
     super.removed(playerIn);
-    //this is not the saving version
-    //    clearContainer(playerIn, craftMatrix);
   }
-  // 
-  //  @Override
-  //  public boolean canTakeItemForPickAll(ItemStack itemStack, Slot slot) {
-  //    return slot.container != craftResult && super.canTakeItemForPickAll(itemStack, slot);
-  //  }
 
   @Override
   public boolean stillValid(Player playerIn) {

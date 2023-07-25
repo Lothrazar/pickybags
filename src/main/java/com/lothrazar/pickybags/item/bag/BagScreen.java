@@ -11,6 +11,8 @@ public class BagScreen extends AbstractContainerScreen<BagContainer> {
 
   public BagScreen(BagContainer screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
+    this.imageHeight = 221;
+    this.inventoryLabelY = 128;
   }
 
   @Override
@@ -35,7 +37,7 @@ public class BagScreen extends AbstractContainerScreen<BagContainer> {
 
   @Override
   protected void renderBg(GuiGraphics ms, float partialTicks, int x, int y) {
-    this.drawBackground(ms, BagsMenuRegistry.INVENTORY);
+    this.drawBackground(ms, BagsMenuRegistry.GENERIC_54);
   }
 
   /**
