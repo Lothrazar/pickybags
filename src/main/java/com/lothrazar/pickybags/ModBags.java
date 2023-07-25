@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.pickybags.item.BagsMenuRegistry;
 import com.lothrazar.pickybags.item.ModBagsRegistry;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -27,6 +28,6 @@ public class ModBags {
   }
 
   private void setup(final FMLCommonSetupEvent event) {
-    //    MinecraftForge.EVENT_BUS.register(new WhateverEvents()); 
+    MinecraftForge.EVENT_BUS.register(new PickupEvents());
   }
 }
