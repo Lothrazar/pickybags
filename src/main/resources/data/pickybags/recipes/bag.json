@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "tct",
-    "lcl",
+    "tst",
+    "l l",
     "lll"
   ],
   "key": {
@@ -13,7 +13,7 @@
       "tag": "forge:leather"
     },
     "s": {
-      "item": "minecraft:copper_ingot"
+      "item": "minecraft:flint"
     }
   },
   "result": {

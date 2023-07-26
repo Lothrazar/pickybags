@@ -1,8 +1,8 @@
 package com.lothrazar.pickybags.item.pickup;
 
 import com.lothrazar.library.item.ItemFlib;
-import com.lothrazar.pickybags.PickupTags;
 import com.lothrazar.pickybags.item.ModBagsRegistry;
+import com.lothrazar.pickybags.item.PickupTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -21,7 +21,11 @@ public class PickupBagItem extends ItemFlib {
   public PickupBagItem(Properties properties) {
     super(properties);
   }
+  //right click to open
 
+  //tooltip qty (SHARE tags )
+  // 
+  //
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
     return new PickupBagCapability(stack, nbt);
@@ -31,7 +35,10 @@ public class PickupBagItem extends ItemFlib {
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
       int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
-      NetworkHooks.openScreen((ServerPlayer) playerIn, new PickupBagContainerProvider(slot, playerIn.getItemInHand(handIn).getItem()), buf -> buf.writeInt(slot));
+      NetworkHooks.openScreen((ServerPlayer) playerIn, new PickupBagContainerProvider(slot, playerIn.getItemInHand(handIn).getItem()), buf -> {
+        buf.writeInt(slot);
+        buf.writeItem(playerIn.getItemInHand(handIn));
+      });
     }
     return super.use(worldIn, playerIn, handIn);
   }
@@ -44,7 +51,6 @@ public class PickupBagItem extends ItemFlib {
       return itemPickup.is(PickupTags.PLANT_LIKE);
     }
     if (theBag == ModBagsRegistry.PICKUP_ROCKS.get()) {
-      System.out.println("can insert?" + theBag + " | " + itemPickup);
       return itemPickup.is(PickupTags.STONE_LIKE);
     }
     if (theBag == ModBagsRegistry.PICKUP_TREES.get()) {

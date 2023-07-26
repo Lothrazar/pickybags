@@ -24,6 +24,6 @@ public class PickupBagContainerProvider implements MenuProvider {
 
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player player) {
-    return new PickupBagContainer(i, playerInventory, player, this.slot);
+    return new PickupBagContainer(i, playerInventory, player, this.slot, this.item);
   }
 }

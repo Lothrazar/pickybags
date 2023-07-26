@@ -5,6 +5,7 @@ import com.lothrazar.library.gui.ContainerFlib;
 import com.lothrazar.pickybags.item.BagsMenuRegistry;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
@@ -14,25 +15,30 @@ public class PickupBagContainer extends ContainerFlib {
   public ItemStack bag = ItemStack.EMPTY;
   public int slot;
 
-  public PickupBagContainer(int id, Inventory playerInventory, Player player, int slot) {
+  public PickupBagContainer(int id, Inventory playerInventory, Player player, int slot, Item item) {
     super(BagsMenuRegistry.PICKUP.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    if (player.getMainHandItem().getItem() instanceof PickupBagItem) {
-      this.bag = player.getMainHandItem();
-      this.slot = player.getInventory().selected;
-    }
-    else if (player.getOffhandItem().getItem() instanceof PickupBagItem) {
-      this.bag = player.getOffhandItem();
-      this.slot = 40;
-    }
-    else {
-      for (int x = 0; x < playerInventory.getContainerSize(); x++) {
-        ItemStack stack = playerInventory.getItem(x);
-        if (stack.getItem() instanceof PickupBagItem) {
-          bag = stack;
-          slot = x;
-          break;
+    this.slot = slot;
+    this.bag = playerInventory.getItem(this.slot);
+    if (this.bag.getItem() != item) {
+      System.out.println("error: bag not found from client slot");
+      if (player.getMainHandItem().getItem() == item) {
+        this.bag = player.getMainHandItem();
+        this.slot = player.getInventory().selected;
+      }
+      else if (player.getOffhandItem().getItem() == item) {
+        this.bag = player.getOffhandItem();
+        this.slot = 40;
+      }
+      else {
+        for (int x = 0; x < playerInventory.getContainerSize(); x++) {
+          ItemStack stack = playerInventory.getItem(x);
+          if (stack.getItem() == item) {
+            bag = stack;
+            this.slot = x;
+            break;
+          }
         }
       }
     }
@@ -59,8 +65,6 @@ public class PickupBagContainer extends ContainerFlib {
 
   @Override
   public boolean stillValid(Player playerIn) {
-    return true;
-    //    return hand == null
-    //        || playerIn.getItemInHand(hand).getItem() instanceof CraftingStickItem;
+    return !bag.isEmpty();
   }
 }

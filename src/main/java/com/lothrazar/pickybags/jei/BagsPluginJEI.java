@@ -1,5 +1,6 @@
-package com.lothrazar.pickybags;
+package com.lothrazar.pickybags.jei;
 
+import com.lothrazar.pickybags.ModBags;
 import com.lothrazar.pickybags.item.BagsMenuRegistry;
 import com.lothrazar.pickybags.item.ModBagsRegistry;
 import com.lothrazar.pickybags.item.slab.CraftingSlabContainer;

@@ -1,4 +1,4 @@
-package com.lothrazar.pickybags;
+package com.lothrazar.pickybags.item;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
