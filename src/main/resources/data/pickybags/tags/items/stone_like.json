@@ -4,11 +4,11 @@
     "#minecraft:terracotta",
     "minecraft:clay_ball",
     "minecraft:clay",
-    "#forge:ore_bearing_ground/stone",
+    "#minecraft:stone_crafting_materials",
     "#forge:cobblestone",
     "#forge:netherrack",
     "#forge:end_stones",
-    "#forge:dirt",
+    "#minecraft:dirt",
     "#forge:stone",
     "#forge:gravel"
   ]
