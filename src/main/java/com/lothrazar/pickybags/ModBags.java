@@ -18,11 +18,9 @@ public class ModBags {
 
   public ModBags() {
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-    //    ModBagsRegistry.BLOCKS.register(bus); // template; rename to bus. fix mod registry TAB group defaults  
-    //    ModBagsRegistry.TILE_ENTITIES.register(bus);
     ModBagsRegistry.ITEMS.register(bus);
     BagsMenuRegistry.CONTAINERS.register(bus);
-    ConfigManager.setup();
+    PickupTags.setup();
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
     FMLJavaModLoadingContext.get().getModEventBus().addListener(BagsMenuRegistry::setupClient);
   }

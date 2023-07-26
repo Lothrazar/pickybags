@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " w ",
+    "wcw",
+    "wdw"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:magenta_wool"
+    },
+    "c": {
+      "tag": "forge:chests/wooden"
+    },
+    "d": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "result": {
+    "item": "pickybags:pickup_gems"
+  }
+}

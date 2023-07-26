@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " w ",
+    "wcw",
+    "wdw"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:yellow_wool"
+    },
+    "c": {
+      "tag": "forge:chests/wooden"
+    },
+    "d": {
+      "tag": "forge:seeds"
+    }
+  },
+  "result": {
+    "item": "pickybags:pickup_plants"
+  }
+}

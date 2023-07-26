@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "tct",
+    "lcl",
+    "lll"
+  ],
+  "key": {
+    "t": {
+      "item": "minecraft:stick"
+    },
+    "l": {
+      "tag": "forge:leather"
+    },
+    "s": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "pickybags:bag"
+  }
+}

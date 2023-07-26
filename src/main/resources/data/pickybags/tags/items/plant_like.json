@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:saplings",
+    "#forge:crops",
+    "#forge:plants",
+    "#forge:mushrooms",
+    "#forge:seeds"
+  ]
+}

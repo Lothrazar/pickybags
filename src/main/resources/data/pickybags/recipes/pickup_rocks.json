@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " w ",
+    "wcw",
+    "wdw"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:brown_wool"
+    },
+    "c": {
+      "tag": "forge:chests/wooden"
+    },
+    "d": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "item": "pickybags:pickup_rocks"
+  }
+}

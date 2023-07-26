@@ -63,7 +63,7 @@ public class PickupEvents {
 
   private static boolean canInsert(ItemStack bag, ItemStack itemPickup) {
     if (bag.getItem() instanceof PickupBagItem pu) {
-      return pu.canInsert(itemPickup);
+      return PickupBagItem.canInsert(pu, itemPickup);
     }
     return false;
   }

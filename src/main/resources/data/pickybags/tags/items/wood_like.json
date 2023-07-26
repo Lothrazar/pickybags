@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:logs",
+    "#minecraft:planks",
+    "#minecraft:wooden_slabs",
+    "#minecraft:wooden_stairs",
+    "#forge:rods/wooden",
+    "#forge:fence_gates/wooden",
+    "#forge:fences/wooden"
+  ]
+}

@@ -1,5 +1,10 @@
 { 
+	"itemGroup.pickybags":"Picky Bags",
 	"item.pickybags.bag":"Item Bag",
-	"item.pickybags.slab":"Crafting Stone"
+	"item.pickybags.slab":"Crafting Slab",
+	"item.pickybags.pickup_rocks":"Digger's Collection Bag",
+	"item.pickybags.pickup_trees":"Forester's Collection Bag",
+	"item.pickybags.pickup_gems":"Miner's Collection Bag",
+	"item.pickybags.pickup_plants":"Gardener's Collection Bag"
 
 }
