@@ -3,6 +3,8 @@
 	"item.pickybags.bag":"Item Bag",
 	"item.pickybags.bag.tooltip":"Storage size of a double chest",
 	"item.pickybags.slab":"Crafting Slab", 
+	"item.pickybags.lunchbox":"Lunchbox",
+	"item.pickybags.lunchbox.tooltip":"Picks up food for you; eat to consume contents; sneak to open",
 	
 	"item.pickybags.pickup_rocks":"Digger's Collection Bag",
 	"item.pickybags.pickup_rocks.tooltip":"Collects stone and dirt related items into its own inventory",

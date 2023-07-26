@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import com.lothrazar.pickybags.event.PickupClientEvents;
 import com.lothrazar.pickybags.event.PickupEvents;
 import com.lothrazar.pickybags.item.bag.BagScreen;
+import com.lothrazar.pickybags.item.foodbox.ScreenLunchbox;
 import com.lothrazar.pickybags.item.pickup.PickupBagScreen;
 import com.lothrazar.pickybags.item.slab.CraftingSlabScreen;
 import com.lothrazar.pickybags.net.PacketRegistry;
@@ -43,6 +44,7 @@ public class ModBags {
     //for client side only setup
     MenuScreens.register(BagsMenuRegistry.SLAB.get(), CraftingSlabScreen::new);
     MenuScreens.register(BagsMenuRegistry.BAG.get(), BagScreen::new);
+    MenuScreens.register(BagsMenuRegistry.LUNCHBOX.get(), ScreenLunchbox::new);
     MenuScreens.register(BagsMenuRegistry.PICKUP.get(), PickupBagScreen::new);
     MinecraftForge.EVENT_BUS.register(new PickupClientEvents());
   }

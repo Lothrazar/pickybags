@@ -2,21 +2,25 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " f ",
-    "lsl",
-    "lll"
+    "psp",
+    "ccc"
   ],
   "key": {
+    "c": {
+      "item": "minecraft:copper_ingot"
+    },
     "s": {
       "tag": "forge:chests/wooden"
     },
-    "l": {
-      "tag": "forge:leather"
+    "p": {
+      "tag": "forge:dyes/purple"
     },
     "f": {
       "item": "minecraft:flint"
     }
   },
   "result": {
-    "item": "pickybags:bag"
+    "item": "pickybags:lunchbox",
+    "count": 1
   }
 }

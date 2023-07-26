@@ -2,6 +2,7 @@ package com.lothrazar.pickybags.item.pickup;
 
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.gui.ContainerFlib;
+import com.lothrazar.pickybags.ModBags;
 import com.lothrazar.pickybags.registry.BagsMenuRegistry;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +23,7 @@ public class PickupBagContainer extends ContainerFlib {
     this.slot = slot;
     this.bag = playerInventory.getItem(this.slot);
     if (this.bag.getItem() != item) {
-      System.out.println("error: bag not found from client slot");
+      ModBags.LOGGER.error("error: bag not found from client slot");
       if (player.getMainHandItem().getItem() == item) {
         this.bag = player.getMainHandItem();
         this.slot = player.getInventory().selected;
@@ -42,8 +43,6 @@ public class PickupBagContainer extends ContainerFlib {
         }
       }
     }
-    this.playerEntity = player;
-    this.playerInventory = playerInventory;
     bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       this.endInv = h.getSlots();
       final int numRows = 3;

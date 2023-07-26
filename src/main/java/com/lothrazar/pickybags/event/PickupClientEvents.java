@@ -26,8 +26,11 @@ public class PickupClientEvents {
     if (rightClickDown && gui.getSlotUnderMouse() != null) {
       Slot slotHit = gui.getSlotUnderMouse();
       ItemStack itemClicked = slotHit.getItem();
-      if (isBag(itemClicked) || itemClicked.getItem() == ModBagsRegistry.SLAB.get() || itemClicked.getItem() == ModBagsRegistry.BAG.get()) {
-        PacketRegistry.INSTANCE.sendToServer(new PacketOpenBag(slotHit.index, itemClicked.getItem()));
+      if (isBag(itemClicked)
+          || itemClicked.getItem() == ModBagsRegistry.BOX.get()
+          || itemClicked.getItem() == ModBagsRegistry.SLAB.get()
+          || itemClicked.getItem() == ModBagsRegistry.BAG.get()) {
+        PacketRegistry.INSTANCE.sendToServer(new PacketOpenBag(slotHit.getSlotIndex(), itemClicked.getItem()));
         event.setCanceled(true);
         SoundUtil.playSound(Minecraft.getInstance().player, SoundEvents.UI_BUTTON_CLICK.get());
       }

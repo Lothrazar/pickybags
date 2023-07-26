@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import com.lothrazar.library.util.SoundUtil;
+import com.lothrazar.pickybags.item.foodbox.ItemLunchbox;
 import com.lothrazar.pickybags.item.pickup.PickupBagItem;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -40,7 +41,7 @@ public class PickupEvents {
   }
 
   public static ItemStack tryInsert(ItemStack bag, ItemStack itemPickup) {
-    if (!isBag(bag) || !canInsert(bag, itemPickup)) {
+    if (!isInsertable(bag) || !canInsert(bag, itemPickup)) {
       return itemPickup; // bounce it back un-touched
     }
     AtomicReference<ItemStack> returnStack = new AtomicReference<>(ItemHandlerHelper.copyStackWithSize(itemPickup, itemPickup.getCount()));
@@ -53,20 +54,23 @@ public class PickupEvents {
   public static List<Integer> getAllBagSlots(Player player) {
     List<Integer> slots = new ArrayList<>();
     for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-      if (isBag(player.getInventory().getItem(i))) {
+      if (isInsertable(player.getInventory().getItem(i))) {
         slots.add(i);
       }
     }
     return slots;
   }
 
-  private static boolean isBag(ItemStack bag) {
-    return bag.getItem() instanceof PickupBagItem;
+  private static boolean isInsertable(ItemStack bag) {
+    return bag.getItem() instanceof PickupBagItem || bag.getItem() instanceof ItemLunchbox;
   }
 
   private static boolean canInsert(ItemStack bag, ItemStack itemPickup) {
     if (bag.getItem() instanceof PickupBagItem pu) {
       return PickupBagItem.canInsert(pu, itemPickup);
+    }
+    if (bag.getItem() instanceof ItemLunchbox pu) {
+      return ItemLunchbox.canInsert(pu, itemPickup);
     }
     return false;
   }

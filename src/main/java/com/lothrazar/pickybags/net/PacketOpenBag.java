@@ -4,6 +4,8 @@ import java.util.function.Supplier;
 import com.lothrazar.library.packet.PacketFlib;
 import com.lothrazar.pickybags.item.bag.BagContainerProvider;
 import com.lothrazar.pickybags.item.bag.BagItem;
+import com.lothrazar.pickybags.item.foodbox.ContainerProviderLunchbox;
+import com.lothrazar.pickybags.item.foodbox.ItemLunchbox;
 import com.lothrazar.pickybags.item.pickup.PickupBagContainerProvider;
 import com.lothrazar.pickybags.item.pickup.PickupBagItem;
 import com.lothrazar.pickybags.item.slab.CraftingSlabContainerProvider;
@@ -39,6 +41,9 @@ public class PacketOpenBag extends PacketFlib {
       }
       else if (message.item instanceof CraftingSlabItem) {
         NetworkHooks.openScreen(player, new CraftingSlabContainerProvider(message.slot), buf -> buf.writeInt(message.slot));
+      }
+      else if (message.item instanceof ItemLunchbox) {
+        NetworkHooks.openScreen(player, new ContainerProviderLunchbox(message.slot), buf -> buf.writeInt(message.slot));
       }
     });
     message.done(ctx);

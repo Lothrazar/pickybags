@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.network.NetworkHooks;
@@ -21,6 +22,11 @@ public class PickupBagItem extends ItemCountContents {
 
   public PickupBagItem(Properties properties) {
     super(properties.stacksTo(1), new ItemFlib.Settings().tooltip());
+  }
+
+  @Override
+  public Rarity getRarity(ItemStack stack) {
+    return Rarity.RARE;
   }
 
   @Override

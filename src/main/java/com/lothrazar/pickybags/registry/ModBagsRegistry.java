@@ -2,6 +2,7 @@ package com.lothrazar.pickybags.registry;
 
 import com.lothrazar.pickybags.ModBags;
 import com.lothrazar.pickybags.item.bag.BagItem;
+import com.lothrazar.pickybags.item.foodbox.ItemLunchbox;
 import com.lothrazar.pickybags.item.pickup.PickupBagItem;
 import com.lothrazar.pickybags.item.slab.CraftingSlabItem;
 import net.minecraft.core.registries.Registries;
@@ -27,6 +28,7 @@ public class ModBagsRegistry {
   //  public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ModBags.MODID);
   public static final RegistryObject<Item> SLAB = ITEMS.register("slab", () -> new CraftingSlabItem(new Item.Properties()));
   public static final RegistryObject<Item> BAG = ITEMS.register("bag", () -> new BagItem(new Item.Properties()));
+  public static final RegistryObject<Item> BOX = ITEMS.register("lunchbox", () -> new ItemLunchbox(new Item.Properties()));
   //
   public static final RegistryObject<PickupBagItem> PICKUP_ROCKS = ITEMS.register("pickup_rocks", () -> new PickupBagItem(new Item.Properties()));
   public static final RegistryObject<PickupBagItem> PICKUP_GEMS = ITEMS.register("pickup_gems", () -> new PickupBagItem(new Item.Properties()));

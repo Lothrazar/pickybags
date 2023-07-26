@@ -37,7 +37,7 @@ public class PickupBagScreen extends AbstractContainerScreen<PickupBagContainer>
 
   @Override
   protected void renderBg(GuiGraphics ms, float partialTicks, int x, int y) {
-    this.drawBackground(ms, BagsMenuRegistry.BOX);
+    this.drawBackground(ms, BagsMenuRegistry.SHULKER);
   }
 
   /**
