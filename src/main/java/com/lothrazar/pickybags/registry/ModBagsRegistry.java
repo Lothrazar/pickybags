@@ -1,4 +1,4 @@
-package com.lothrazar.pickybags.item;
+package com.lothrazar.pickybags.registry;
 
 import com.lothrazar.pickybags.ModBags;
 import com.lothrazar.pickybags.item.bag.BagItem;

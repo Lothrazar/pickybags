@@ -3,7 +3,7 @@ package com.lothrazar.pickybags.item.slab;
 import java.util.Optional;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.gui.ContainerFlib;
-import com.lothrazar.pickybags.item.BagsMenuRegistry;
+import com.lothrazar.pickybags.registry.BagsMenuRegistry;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;

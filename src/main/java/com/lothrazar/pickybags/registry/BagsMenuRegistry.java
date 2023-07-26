@@ -1,17 +1,12 @@
-package com.lothrazar.pickybags.item;
+package com.lothrazar.pickybags.registry;
 
 import com.lothrazar.pickybags.ModBags;
 import com.lothrazar.pickybags.item.bag.BagContainer;
-import com.lothrazar.pickybags.item.bag.BagScreen;
 import com.lothrazar.pickybags.item.pickup.PickupBagContainer;
-import com.lothrazar.pickybags.item.pickup.PickupBagScreen;
 import com.lothrazar.pickybags.item.slab.CraftingSlabContainer;
-import com.lothrazar.pickybags.item.slab.CraftingSlabScreen;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -26,11 +21,4 @@ public class BagsMenuRegistry {
   public static final RegistryObject<MenuType<CraftingSlabContainer>> SLAB = CONTAINERS.register("slab", () -> IForgeMenuType.create((windowId, inv, data) -> new CraftingSlabContainer(windowId, inv, inv.player, data.readInt())));
   public static final RegistryObject<MenuType<BagContainer>> BAG = CONTAINERS.register("bag", () -> IForgeMenuType.create((windowId, inv, data) -> new BagContainer(windowId, inv, inv.player, data.readInt())));
   public static final RegistryObject<MenuType<PickupBagContainer>> PICKUP = CONTAINERS.register("pickup", () -> IForgeMenuType.create((windowId, inv, data) -> new PickupBagContainer(windowId, inv, inv.player, data.readInt(), data.readItem().getItem())));
-
-  public static void setupClient(final FMLClientSetupEvent event) {
-    //for client side only setup
-    MenuScreens.register(SLAB.get(), CraftingSlabScreen::new);
-    MenuScreens.register(BAG.get(), BagScreen::new);
-    MenuScreens.register(PICKUP.get(), PickupBagScreen::new);
-  }
 }

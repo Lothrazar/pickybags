@@ -1,6 +1,7 @@
 package com.lothrazar.pickybags.item.bag;
 
 import com.lothrazar.library.item.ItemFlib;
+import com.lothrazar.pickybags.item.ItemCountContents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -11,12 +12,12 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.network.NetworkHooks;
 
-public class BagItem extends ItemFlib {
+public class BagItem extends ItemCountContents {
 
   public static final int SLOTS = 81;
 
   public BagItem(Properties properties) {
-    super(properties);
+    super(properties.stacksTo(1), new ItemFlib.Settings().tooltip());
   }
 
   @Override

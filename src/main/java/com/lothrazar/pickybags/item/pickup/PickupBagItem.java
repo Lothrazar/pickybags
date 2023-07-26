@@ -1,8 +1,9 @@
 package com.lothrazar.pickybags.item.pickup;
 
 import com.lothrazar.library.item.ItemFlib;
-import com.lothrazar.pickybags.item.ModBagsRegistry;
-import com.lothrazar.pickybags.item.PickupTags;
+import com.lothrazar.pickybags.item.ItemCountContents;
+import com.lothrazar.pickybags.registry.ModBagsRegistry;
+import com.lothrazar.pickybags.registry.PickupTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -14,23 +15,20 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.network.NetworkHooks;
 
-public class PickupBagItem extends ItemFlib {
+public class PickupBagItem extends ItemCountContents {
 
   public static final int SLOTS = 3 * 9;
 
   public PickupBagItem(Properties properties) {
-    super(properties);
+    super(properties.stacksTo(1), new ItemFlib.Settings().tooltip());
   }
-  //right click to open
 
-  //tooltip qty (SHARE tags )
-  // 
-  //
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
     return new PickupBagCapability(stack, nbt);
   }
 
+  //Right click to open
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {

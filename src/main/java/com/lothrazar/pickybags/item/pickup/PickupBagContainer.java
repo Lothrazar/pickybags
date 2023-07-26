@@ -2,7 +2,7 @@ package com.lothrazar.pickybags.item.pickup;
 
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.gui.ContainerFlib;
-import com.lothrazar.pickybags.item.BagsMenuRegistry;
+import com.lothrazar.pickybags.registry.BagsMenuRegistry;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;

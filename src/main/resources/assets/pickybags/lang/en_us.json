@@ -1,10 +1,18 @@
 { 
 	"itemGroup.pickybags":"Picky Bags",
 	"item.pickybags.bag":"Item Bag",
-	"item.pickybags.slab":"Crafting Slab",
+	"item.pickybags.bag.tooltip":"Storage size of a double chest",
+	"item.pickybags.slab":"Crafting Slab", 
+	
 	"item.pickybags.pickup_rocks":"Digger's Collection Bag",
+	"item.pickybags.pickup_rocks.tooltip":"Collects stone and dirt related items into its own inventory",
 	"item.pickybags.pickup_trees":"Forester's Collection Bag",
+	"item.pickybags.pickup_trees.tooltip":"Collects wood related items into its own inventory",
 	"item.pickybags.pickup_gems":"Miner's Collection Bag",
-	"item.pickybags.pickup_plants":"Gardener's Collection Bag"
+	"item.pickybags.pickup_gems.tooltip":"Collects ores and metals into its own inventory",
+	"item.pickybags.pickup_plants":"Gardener's Collection Bag",
+	"item.pickybags.pickup_plants.tooltip":"Collects seeds and plant related items into its own inventory",
+	
+	"pickybags.count_empty":"Empty Slots: "
 
 }

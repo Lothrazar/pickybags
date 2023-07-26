@@ -1,6 +1,6 @@
 package com.lothrazar.pickybags.item.bag;
 
-import com.lothrazar.pickybags.item.BagsMenuRegistry;
+import com.lothrazar.pickybags.registry.BagsMenuRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

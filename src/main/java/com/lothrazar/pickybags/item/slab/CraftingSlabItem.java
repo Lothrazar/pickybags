@@ -12,7 +12,7 @@ import net.minecraftforge.network.NetworkHooks;
 public class CraftingSlabItem extends ItemFlib {
 
   public CraftingSlabItem(Properties properties) {
-    super(properties);
+    super(properties.stacksTo(1), new ItemFlib.Settings().noTooltip().burnTime(200));
   }
 
   @Override
