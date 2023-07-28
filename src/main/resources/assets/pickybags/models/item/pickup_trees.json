@@ -1,6 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "pickybags:item/pickup_trees"
+        "layer0": "pickybags:item/pickup_trees",
+        "layer1": "pickybags:item/pickup_trees_overlay"
     }
 }

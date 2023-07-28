@@ -99,7 +99,7 @@ public class PickupClientEvents {
       }
       //layer 1 is overlay  
       return getColour(stack);
-    }, ModBagsRegistry.BOX.get()); // TODO: edit textures of bags for layered insert
+    }, ModBagsRegistry.PICKUP_TREES.get(), ModBagsRegistry.PICKUP_ROCKS.get(), ModBagsRegistry.PICKUP_PLANTS.get(), ModBagsRegistry.PICKUP_GEMS.get(), ModBagsRegistry.BOX.get());
   }
 
   private static int getColour(ItemStack stack) {
