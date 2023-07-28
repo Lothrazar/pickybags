@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import com.lothrazar.library.util.SoundUtil;
-import com.lothrazar.pickybags.item.foodbox.ItemLunchbox;
-import com.lothrazar.pickybags.item.pickup.PickupBagItem;
+import com.lothrazar.pickybags.item.IPickupable;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -41,37 +40,30 @@ public class PickupEvents {
   }
 
   public static ItemStack tryInsert(ItemStack bag, ItemStack itemPickup) {
-    if (!isInsertable(bag) || !canInsert(bag, itemPickup)) {
-      return itemPickup; // bounce it back un-touched
+    if (bag.getItem() instanceof IPickupable pug) {
+      if (pug.canInsert(itemPickup)) {
+        //its a pickup bag with insert allowed
+        AtomicReference<ItemStack> returnStack = new AtomicReference<>(ItemHandlerHelper.copyStackWithSize(itemPickup, itemPickup.getCount()));
+        bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(ih -> {
+          returnStack.set(ItemHandlerHelper.insertItem(ih, itemPickup, false));
+        });
+        return returnStack.get();
+      }
     }
-    AtomicReference<ItemStack> returnStack = new AtomicReference<>(ItemHandlerHelper.copyStackWithSize(itemPickup, itemPickup.getCount()));
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(ih -> {
-      returnStack.set(ItemHandlerHelper.insertItem(ih, itemPickup, false));
-    });
-    return returnStack.get();
+    return itemPickup;
   }
 
   public static List<Integer> getAllBagSlots(Player player) {
     List<Integer> slots = new ArrayList<>();
     for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-      if (isInsertable(player.getInventory().getItem(i))) {
+      if (isContainer(player.getInventory().getItem(i))) {
         slots.add(i);
       }
     }
     return slots;
   }
 
-  private static boolean isInsertable(ItemStack bag) {
-    return bag.getItem() instanceof PickupBagItem || bag.getItem() instanceof ItemLunchbox;
-  }
-
-  private static boolean canInsert(ItemStack bag, ItemStack itemPickup) {
-    if (bag.getItem() instanceof PickupBagItem pu) {
-      return PickupBagItem.canInsert(pu, itemPickup);
-    }
-    if (bag.getItem() instanceof ItemLunchbox pu) {
-      return ItemLunchbox.canInsert(pu, itemPickup);
-    }
-    return false;
+  private static boolean isContainer(ItemStack bag) {
+    return bag.getItem() instanceof IPickupable;
   }
 }

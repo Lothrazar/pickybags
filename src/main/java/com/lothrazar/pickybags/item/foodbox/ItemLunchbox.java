@@ -25,6 +25,7 @@ package com.lothrazar.pickybags.item.foodbox;
 
 import com.lothrazar.library.item.ItemFlib;
 import com.lothrazar.library.util.ChatUtil;
+import com.lothrazar.pickybags.item.IPickupable;
 import com.lothrazar.pickybags.item.ItemCountContents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,9 +42,10 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 
-public class ItemLunchbox extends ItemCountContents {
+public class ItemLunchbox extends ItemCountContents implements IPickupable {
 
   public static final int SLOTS = 9;
+  public static final int COLOUR_FOOD_BAR = 0xCFFF04;
 
   public ItemLunchbox(Properties prop) {
     super(prop.stacksTo(1), new ItemFlib.Settings().tooltip());
@@ -69,8 +71,6 @@ public class ItemLunchbox extends ItemCountContents {
     return stack.hasTag() || super.isBarVisible(stack);
   }
 
-  public static final int COLOUR_FOOD_BAR = 0xCFFF04;
-
   //show emptiness in fake durability bar
   @Override
   public int getBarColor(ItemStack stack) {
@@ -82,39 +82,11 @@ public class ItemLunchbox extends ItemCountContents {
     if (!stack.hasTag()) {
       return 0;
     }
-    float max = stack.getTag().getInt("count_max");
-    float current = max - stack.getTag().getInt("count_empty");
+    float max = stack.getTag().getInt(COUNT_MAX);
+    float current = max - stack.getTag().getInt(COUNT_EMPTY);
     return (max == 0) ? 0 : Math.round(13.0F * current / max);
-    //    }
-    //    return super.getBarWidth(stack);
   }
 
-  // ShareTag for server->client capability data sync
-  //  @Override
-  //  public CompoundTag getShareTag(ItemStack stack) {
-  //    CompoundTag nbt = stack.getOrCreateTag();
-  //    IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-  //    //on server  this runs . also has correct values.
-  //    //set data for sync to client
-  //    if (handler != null) {
-  //      int empty = ItemStackUtil.countEmptySlots(handler);
-  //      nbt.putInt("count_empty", empty);
-  //      nbt.putInt("count_max", handler.getSlots());
-  //    }
-  //    return nbt;
-  //  }
-  //
-  //  //clientside read tt
-  //  @Override
-  //  public void readShareTag(ItemStack stack, CompoundTag nbt) {
-  //    if (nbt != null) {
-  //      CompoundTag stackTag = stack.getOrCreateTag();
-  //      stackTag.putInt("count_empty", nbt.getInt("count_empty"));
-  //      stackTag.putInt("count_max", nbt.getInt("count_max"));
-  //    }
-  //    super.readShareTag(stack, nbt);
-  //  }
-  //
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
     if (!worldIn.isClientSide && entityLiving instanceof Player player) {
@@ -173,7 +145,8 @@ public class ItemLunchbox extends ItemCountContents {
   //    return 0xFFFFFFFF;
   //  }
 
-  public static boolean canInsert(ItemLunchbox pu, ItemStack itemPickup) {
+  @Override
+  public boolean canInsert(ItemStack itemPickup) {
     return itemPickup.isEdible();
   }
 }

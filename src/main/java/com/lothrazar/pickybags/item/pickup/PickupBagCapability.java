@@ -2,7 +2,6 @@ package com.lothrazar.pickybags.item.pickup;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -17,15 +16,15 @@ public class PickupBagCapability implements ICapabilitySerializable<CompoundTag>
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return !(stack.getItem() instanceof PickupBagItem)
-          && PickupBagItem.canInsert(bag, stack)
+          && bag.canInsert(stack)
           && super.isItemValid(slot, stack);
     }
   };
   private final LazyOptional<ItemStackHandler> inventoryCap = LazyOptional.of(() -> invo);
-  private Item bag;
+  private PickupBagItem bag;
 
   public PickupBagCapability(ItemStack stack, CompoundTag nbt) {
-    this.bag = stack.getItem();
+    this.bag = (PickupBagItem) stack.getItem();
   }
 
   @Override

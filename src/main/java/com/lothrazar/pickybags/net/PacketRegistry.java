@@ -18,5 +18,6 @@ public class PacketRegistry {
   public static void setup() {
     int id = 0;
     INSTANCE.registerMessage(id++, PacketOpenBag.class, PacketOpenBag::encode, PacketOpenBag::decode, PacketOpenBag::handle);
+    INSTANCE.registerMessage(id++, PacketInsertBag.class, PacketInsertBag::encode, PacketInsertBag::decode, PacketInsertBag::handle);
   }
 }

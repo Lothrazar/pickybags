@@ -14,6 +14,13 @@ public class ScreenLunchbox extends AbstractContainerScreen<ContainerLunchbox> {
   }
 
   @Override
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(ms);
+    super.render(ms, mouseX, mouseY, partialTicks);
+    this.renderTooltip(ms, mouseX, mouseY);
+  }
+
+  @Override
   protected void init() {
     super.init();
     //    CompoundTag nbt = this.menu.bag.getOrCreateTag();

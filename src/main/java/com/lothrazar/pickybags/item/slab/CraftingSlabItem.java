@@ -1,6 +1,7 @@
 package com.lothrazar.pickybags.item.slab;
 
 import com.lothrazar.library.item.ItemFlib;
+import com.lothrazar.pickybags.item.IOpenable;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -9,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
-public class CraftingSlabItem extends ItemFlib {
+public class CraftingSlabItem extends ItemFlib implements IOpenable {
 
   public CraftingSlabItem(Properties properties) {
     super(properties.stacksTo(1), new ItemFlib.Settings().noTooltip().burnTime(200));

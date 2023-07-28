@@ -21,8 +21,8 @@ import net.minecraftforge.items.IItemHandler;
  */
 public class ItemCountContents extends ItemFlib {
 
-  private static final String COUNT_MAX = "count_max";
-  private static final String COUNT_EMPTY = "count_empty";
+  protected static final String COUNT_MAX = "count_max";
+  protected static final String COUNT_EMPTY = "count_empty";
 
   public ItemCountContents(Properties prop, ItemFlib.Settings s) {
     super(prop, s);

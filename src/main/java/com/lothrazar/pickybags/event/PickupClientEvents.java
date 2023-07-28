@@ -1,12 +1,15 @@
 package com.lothrazar.pickybags.event;
 
 import com.lothrazar.library.util.SoundUtil;
-import com.lothrazar.pickybags.item.pickup.PickupBagItem;
+import com.lothrazar.pickybags.item.IOpenable;
+import com.lothrazar.pickybags.item.IPickupable;
+import com.lothrazar.pickybags.net.PacketInsertBag;
 import com.lothrazar.pickybags.net.PacketOpenBag;
 import com.lothrazar.pickybags.net.PacketRegistry;
-import com.lothrazar.pickybags.registry.ModBagsRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -26,10 +29,7 @@ public class PickupClientEvents {
     if (rightClickDown && gui.getSlotUnderMouse() != null) {
       Slot slotHit = gui.getSlotUnderMouse();
       ItemStack itemClicked = slotHit.getItem();
-      if (isBag(itemClicked)
-          || itemClicked.getItem() == ModBagsRegistry.BOX.get()
-          || itemClicked.getItem() == ModBagsRegistry.SLAB.get()
-          || itemClicked.getItem() == ModBagsRegistry.BAG.get()) {
+      if (itemClicked.getItem() instanceof IOpenable) {
         PacketRegistry.INSTANCE.sendToServer(new PacketOpenBag(slotHit.getSlotIndex(), itemClicked.getItem()));
         event.setCanceled(true);
         SoundUtil.playSound(Minecraft.getInstance().player, SoundEvents.UI_BUTTON_CLICK.get());
@@ -37,7 +37,29 @@ public class PickupClientEvents {
     }
   }
 
-  private static boolean isBag(ItemStack bag) {
-    return bag.getItem() instanceof PickupBagItem;
+  @SubscribeEvent
+  public void onMouseButtonReleased(ScreenEvent.MouseButtonReleased.Pre event) {
+    Minecraft mc = Minecraft.getInstance();
+    Screen screen = mc.screen;
+    boolean leftClickDown = event.getButton() == 0;
+    if (leftClickDown && screen instanceof AbstractContainerScreen<?> gui && !(screen instanceof CreativeModeInventoryScreen)) {
+      if (gui.getSlotUnderMouse() != null) {
+        Slot slotHit = gui.getSlotUnderMouse();
+        ItemStack stackTarget = slotHit.getItem();
+        if (stackTarget.getItem() instanceof IPickupable pug
+            && mc.player != null
+            && mc.player.containerMenu != null) {
+          // 
+          //
+          if (pug.canInsert(mc.player.containerMenu.getCarried())) {
+            int slotId = gui.getSlotUnderMouse().getContainerSlot();
+            SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK.get());
+            PacketRegistry.INSTANCE.sendToServer(new PacketInsertBag(slotId, stackTarget.getItem()));
+            event.setCanceled(true);
+            //              return;
+          }
+        }
+      }
+    }
   }
 }

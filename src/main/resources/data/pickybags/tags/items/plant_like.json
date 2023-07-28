@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "#minecraft:flowers",
     "#minecraft:saplings",
     "#forge:crops",
     "#forge:plants",
