@@ -10,6 +10,8 @@
     "#forge:end_stones",
     "#minecraft:dirt",
     "#forge:stone",
+    "#forge:sand",
+    "#forge:sandstone",
     "#forge:gravel"
   ]
 }

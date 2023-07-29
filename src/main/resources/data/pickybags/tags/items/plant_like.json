@@ -2,7 +2,10 @@
   "replace": false,
   "values": [
     "#minecraft:flowers",
-    "#minecraft:saplings",
+    "#minecraft:leaves",
+    "#minecraft:leaves",
+    "minecraft:bamboo",
+    "minecraft:sugar_cane",
     "#forge:crops",
     "#forge:plants",
     "#forge:mushrooms",
