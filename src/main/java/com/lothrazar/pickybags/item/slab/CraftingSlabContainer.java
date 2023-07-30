@@ -32,7 +32,7 @@ public class CraftingSlabContainer extends ContainerFlib {
     this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
-        addSlot(new Slot(craftMatrix, j + i * 3, 30 + j * Const.SQ, 16 + i * Const.SQ));
+        addSlot(new Slot(craftMatrix, j + i * 3, 30 + j * Const.SQ, 17 + i * Const.SQ));
       }
     }
     layoutPlayerInventorySlots(8, 84);

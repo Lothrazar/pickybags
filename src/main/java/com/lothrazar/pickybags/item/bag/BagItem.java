@@ -1,6 +1,7 @@
 package com.lothrazar.pickybags.item.bag;
 
 import com.lothrazar.library.item.ItemFlib;
+import com.lothrazar.pickybags.item.IOpenable;
 import com.lothrazar.pickybags.item.ItemCountContents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.network.NetworkHooks;
 
-public class BagItem extends ItemCountContents {
+public class BagItem extends ItemCountContents implements IOpenable {
 
   public static final int SLOTS = 81;
 

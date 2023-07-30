@@ -50,7 +50,7 @@ public class ContainerLunchbox extends ContainerFlib {
       this.endInv = h.getSlots();
       for (int j = 0; j < 3; j++) {
         for (int k = 0; k < 3; k++) {
-          addSlot(new SlotItemHandler(h, k + j * 3, 62 + k * Const.SQ, 18 + j * Const.SQ));
+          addSlot(new SlotItemHandler(h, k + j * 3, 62 + k * Const.SQ, 17 + j * Const.SQ));
         }
       }
     });
