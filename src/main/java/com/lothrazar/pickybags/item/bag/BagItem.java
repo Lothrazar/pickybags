@@ -15,7 +15,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 public class BagItem extends ItemCountContents implements IOpenable {
 
-  public static final int SLOTS = 81;
+  public static final int SLOTS = 6 * 9;
 
   public BagItem(Properties properties) {
     super(properties.stacksTo(1), new ItemFlib.Settings().tooltip());

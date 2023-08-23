@@ -22,6 +22,7 @@ public class BagContainer extends ContainerFlib {
     this.playerInventory = playerInventory;
     this.slot = slot;
     this.bag = playerInventory.getItem(this.slot);
+    this.endInv = BagItem.SLOTS;
     if (this.bag.getItem() != ModBagsRegistry.BAG.get()) {
       ModBags.LOGGER.error(slot + "error: bag not found from client slot");
       if (player.getMainHandItem().getItem() instanceof BagItem) {
@@ -46,7 +47,7 @@ public class BagContainer extends ContainerFlib {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-      this.endInv = h.getSlots();
+      //      this.endInv = h.getSlots();
       final int numRows = 6;
       for (int j = 0; j < numRows; ++j) {
         for (int k = 0; k < 9; ++k) {

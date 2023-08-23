@@ -4,6 +4,7 @@
     "1.20.1-latest": "0.0.1"
   },
   "1.20.1": {
-    "0.0.1": "First release contains 7 items "
+    "0.0.1": "First release contains 7 items ",
+    "0.0.2":"Fix cannot shift-click in-out of one of the bags "
   }
 }
