@@ -115,12 +115,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-  flatDir { dir 'libs' } 
-  maven {
-    // location of the maven that hosts JEI files
-    name = "Progwml6 maven"
-    url = 'https://dvs1.progwml6.com/files/maven/'
-  }
+//  flatDir { dir 'libs' } 
   maven {
   	name = "curios"
     url = 'https://maven.theillusivec4.top/'
@@ -155,7 +150,7 @@ dependencies {
      runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
      compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
  
-   implementation fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${minecraft_version}:${crafttweaker_version}")
+ //  implementation fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${minecraft_version}:${crafttweaker_version}")
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${minecraft_version}-${coolmod_version}.jar
