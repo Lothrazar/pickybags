@@ -1,11 +1,11 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/picky-bags",
   "promos": {
-    "1.20.1-latest": "0.0.1"
+    "1.20.1-latest": "1.0.0"
   },
   "1.20.1": {
     "0.0.1": "First release contains 7 items ",
     "0.0.2":"Fix cannot shift-click in-out of one of the bags ",
-    "1.0.0":"Added a feature where you can sneak right-click the bags on a chest/container to deposit its contents.  Pickup bags now can go in a new Curios slot, and will continue to pickup items from there"
+    "1.0.0":"Added a feature where you can sneak right-click the bags on a chest/container to deposit its contents.  Added some alternate recipes for some bags that use more leather in exchange for not requiring certain dyed wool (brown and green are hard to find on some seeds/biomes).  Pickup bags now can go in a new Curios slot, and will continue to pickup items from there"
   }
 }

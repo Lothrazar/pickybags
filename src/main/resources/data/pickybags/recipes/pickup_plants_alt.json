@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " c ",
+    "l l",
+    "ldl"
+  ],
+  "key": {
+    "c": {
+      "tag": "forge:chests/wooden"
+    },
+    "l": {
+      "tag": "forge:leather"
+    },
+    "d": {
+      "tag": "forge:seeds"
+    }
+  },
+  "result": {
+    "item": "pickybags:pickup_plants"
+  }
+}
