@@ -21,6 +21,6 @@ public class BagsMenuRegistry {
   public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ModBags.MODID);
   public static final RegistryObject<MenuType<CraftingSlabContainer>> SLAB = CONTAINERS.register("slab", () -> IForgeMenuType.create((windowId, inv, data) -> new CraftingSlabContainer(windowId, inv, inv.player, data.readInt())));
   public static final RegistryObject<MenuType<BagContainer>> BAG = CONTAINERS.register("bag", () -> IForgeMenuType.create((windowId, inv, data) -> new BagContainer(windowId, inv, inv.player, data.readInt())));
-  public static final RegistryObject<MenuType<PickupBagContainer>> PICKUP = CONTAINERS.register("pickup", () -> IForgeMenuType.create((windowId, inv, data) -> new PickupBagContainer(windowId, inv, inv.player, data.readInt(), data.readItem().getItem())));
+  public static final RegistryObject<MenuType<PickupBagContainer>> PICKUP = CONTAINERS.register("pickup", () -> IForgeMenuType.create((windowId, inv, data) -> new PickupBagContainer(windowId, inv, inv.player, data.readInt(), data.readItem().getItem(), data.readBoolean())));
   public static final RegistryObject<MenuType<ContainerLunchbox>> LUNCHBOX = CONTAINERS.register("lunchbox", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerLunchbox(windowId, inv, inv.player, data.readInt())));
 }

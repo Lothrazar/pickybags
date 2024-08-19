@@ -21,19 +21,26 @@ public class PacketOpenBag extends PacketFlib {
 
   private int slot;
   private Item item;
+  private boolean isCurios;
 
   public PacketOpenBag(int slot, Item item) {
+    this(slot, item, false);
+  }
+
+  public PacketOpenBag(int slot, Item item, boolean isCurios) {
     this.slot = slot;
     this.item = item;
+    this.isCurios = isCurios;
   }
 
   public static void handle(PacketOpenBag message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayer player = ctx.get().getSender();
       if (message.item instanceof PickupBagItem) {
-        NetworkHooks.openScreen(player, new PickupBagContainerProvider(message.slot, message.item), buf -> {
+        NetworkHooks.openScreen(player, new PickupBagContainerProvider(message.slot, message.item, message.isCurios), buf -> {
           buf.writeInt(message.slot);
           buf.writeItem(new ItemStack(message.item));
+          buf.writeBoolean(message.isCurios);
         });
       }
       else if (message.item instanceof BagItem) {
@@ -50,11 +57,12 @@ public class PacketOpenBag extends PacketFlib {
   }
 
   public static PacketOpenBag decode(FriendlyByteBuf buf) {
-    return new PacketOpenBag(buf.readInt(), buf.readItem().getItem());
+    return new PacketOpenBag(buf.readInt(), buf.readItem().getItem(), buf.readBoolean());
   }
 
   public static void encode(PacketOpenBag msg, FriendlyByteBuf buf) {
     buf.writeInt(msg.slot);
     buf.writeItem(new ItemStack(msg.item));
+    buf.writeBoolean(msg.isCurios);
   }
 }

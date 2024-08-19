@@ -1,5 +1,6 @@
 { 
 	"itemGroup.pickybags":"Picky Bags",
+	"curios.identifier.bag":"Pickup Bag",
 	"item.pickybags.bag":"Item Bag",
 	"item.pickybags.bag.tooltip":"Storage size of a double chest",
 	"item.pickybags.slab":"Crafting Slab", 

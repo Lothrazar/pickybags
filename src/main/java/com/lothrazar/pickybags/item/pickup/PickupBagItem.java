@@ -42,6 +42,7 @@ public class PickupBagItem extends ItemCountContents implements IPickupable {
       NetworkHooks.openScreen((ServerPlayer) playerIn, new PickupBagContainerProvider(slot, playerIn.getItemInHand(handIn).getItem()), buf -> {
         buf.writeInt(slot);
         buf.writeItem(playerIn.getItemInHand(handIn));
+        buf.writeBoolean(false);
       });
     }
     return super.use(worldIn, playerIn, handIn);

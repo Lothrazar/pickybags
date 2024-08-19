@@ -45,7 +45,7 @@ pickybags by ${mod_authors}
 [[dependencies.pickybags]]
     modId="minecraft"
     mandatory=true
-    versionRange="[${minecraft_version},)"
+    versionRange="[${mc_version},)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.pickybags]]

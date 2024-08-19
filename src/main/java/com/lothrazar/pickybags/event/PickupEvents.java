@@ -13,6 +13,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class PickupEvents {
@@ -24,8 +25,8 @@ public class PickupEvents {
       ItemEntity itemEntity = event.getItem();
       ItemStack resultStack = itemEntity.getItem();
       int origCount = resultStack.getCount();
-      for (Integer i : getAllBagSlots(player)) {
-        resultStack = tryInsert(player.getInventory().getItem(i), resultStack);
+      for (ItemStack bag : getAllBagSlots(player)) {
+        resultStack = tryInsert(bag, resultStack);
         // loopback 
         if (resultStack.isEmpty()) {
           break;
@@ -39,7 +40,7 @@ public class PickupEvents {
     }
   }
 
-  public static ItemStack tryInsert(ItemStack bag, ItemStack itemPickup) {
+  public static ItemStack tryInsert(final ItemStack bag, ItemStack itemPickup) {
     if (bag.getItem() instanceof IPickupable pug) {
       if (pug.canInsert(itemPickup)) {
         //its a pickup bag with insert allowed
@@ -53,17 +54,26 @@ public class PickupEvents {
     return itemPickup;
   }
 
-  public static List<Integer> getAllBagSlots(Player player) {
-    List<Integer> slots = new ArrayList<>();
+  public static List<ItemStack> getAllBagSlots(Player player) {
+    List<ItemStack> slots = new ArrayList<>();
+    //first priority
+    //get bags from curios mod (if installed and equipped)
+    if (ModList.get().isLoaded("curios")) {
+      //
+      CuriosUtil.fillWithBags(player, slots);
+    }
+    //next
+    //get bags from player inventory
     for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-      if (isContainer(player.getInventory().getItem(i))) {
-        slots.add(i);
+      ItemStack itemStack = player.getInventory().getItem(i);
+      if (isContainer(itemStack)) {
+        slots.add(itemStack);
       }
     }
     return slots;
   }
 
-  private static boolean isContainer(ItemStack bag) {
+  public static boolean isContainer(ItemStack bag) {
     return bag.getItem() instanceof IPickupable;
   }
 }

@@ -3,6 +3,7 @@ package com.lothrazar.pickybags.item.pickup;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.gui.ContainerFlib;
 import com.lothrazar.pickybags.ModBags;
+import com.lothrazar.pickybags.event.CuriosUtil;
 import com.lothrazar.pickybags.registry.BagsMenuRegistry;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -16,12 +17,18 @@ public class PickupBagContainer extends ContainerFlib {
   public ItemStack bag = ItemStack.EMPTY;
   public int slot;
 
-  public PickupBagContainer(int id, Inventory playerInventory, Player player, int slot, Item item) {
+  public PickupBagContainer(int id, Inventory playerInventory, Player player, int slot, Item item, boolean isCurios) {
     super(BagsMenuRegistry.PICKUP.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.slot = slot;
-    this.bag = playerInventory.getItem(this.slot);
+    if (isCurios) {
+      this.bag = CuriosUtil.getInSlot(player, slot);
+    }
+    else {
+      this.bag = playerInventory.getItem(slot);
+    }
+    //now open it up
     if (this.bag.getItem() != item) {
       ModBags.LOGGER.error("error: bag not found from client slot");
       if (player.getMainHandItem().getItem() == item) {
