@@ -94,7 +94,6 @@ public class PickupBagItem extends ItemCountContents implements IPickupable {
     //
     if (h instanceof ItemStackHandler handler && te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).isPresent()) {
       IItemHandler teHandler = te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).orElse(null);
-
       // dump everything in there
       //the player knows whats in the bag and know where they are dumping into
       for (int i = 0; i < handler.getSlots(); i++) {

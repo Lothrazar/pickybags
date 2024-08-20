@@ -22,6 +22,7 @@ public class PickupBagContainerProvider implements MenuProvider {
     this.item = item;
     this.isCurios = isCurios;
   }
+
   @Override
   public Component getDisplayName() {
     return item.getDescription();

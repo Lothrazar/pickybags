@@ -140,6 +140,7 @@ dependencies {
 
      //optional integrations
 
+ //   implementation fg.deobf("curse.maven:cyclic-239286:5620124")
      
      
      compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")

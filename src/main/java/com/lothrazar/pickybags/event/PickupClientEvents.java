@@ -35,13 +35,12 @@ public class PickupClientEvents {
     AbstractContainerScreen<?> gui = (AbstractContainerScreen<?>) event.getScreen();
     boolean rightClickDown = event.getButton() == 1;
     if (rightClickDown && gui.getSlotUnderMouse() != null) {
-
       boolean isCuriosClick = event.getMouseX() < gui.getGuiLeft();
       //
       Slot slotHit = gui.getSlotUnderMouse();
       ItemStack itemClicked = slotHit.getItem();
       if (itemClicked.getItem() instanceof IOpenable) {
-        PacketRegistry.INSTANCE.sendToServer(new PacketOpenBag(slotHit.getSlotIndex(), itemClicked.getItem(), isCuriosClick));
+        PacketRegistry.INSTANCE.sendToServer(new PacketOpenBag(slotHit.getContainerSlot(), itemClicked.getItem(), isCuriosClick));
         event.setCanceled(true);
         SoundUtil.playSound(Minecraft.getInstance().player, SoundEvents.UI_BUTTON_CLICK.get());
       }

@@ -63,7 +63,6 @@ public class BagItem extends ItemCountContents implements IOpenable {
     IItemHandler h = bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     //
     if (h instanceof ItemStackHandler handler && te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).isPresent()) {
-
       IItemHandler teHandler = te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).orElse(null);
       Set<Item> itemsInTargetInventory = new HashSet<>();
       if (teHandler != null) {

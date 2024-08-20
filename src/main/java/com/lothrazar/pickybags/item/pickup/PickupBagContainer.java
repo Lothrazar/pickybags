@@ -23,14 +23,14 @@ public class PickupBagContainer extends ContainerFlib {
     this.playerInventory = playerInventory;
     this.slot = slot;
     if (isCurios) {
-      this.bag = CuriosUtil.getInSlot(player, slot);
+      this.bag = CuriosUtil.getInSlot(player, slot, item);
     }
     else {
       this.bag = playerInventory.getItem(slot);
     }
     //now open it up
     if (this.bag.getItem() != item) {
-      ModBags.LOGGER.error("error: bag not found from client slot");
+      ModBags.LOGGER.error("error: bag not found from client slot" + item + " vs found " + bag);
       if (player.getMainHandItem().getItem() == item) {
         this.bag = player.getMainHandItem();
         this.slot = player.getInventory().selected;
