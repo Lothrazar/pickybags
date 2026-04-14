@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 public class BagsPluginJEI implements IModPlugin {
 
   private static final int PLAYER_INV_SIZE = 4 * 9;
-  private static final ResourceLocation ID = new ResourceLocation(ModBags.MODID, "jei");
+  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModBags.MODID, "jei");
 
   @Override
   public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {}

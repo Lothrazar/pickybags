@@ -5,25 +5,25 @@ import com.lothrazar.pickybags.item.IOpenable;
 import com.lothrazar.pickybags.item.IPickupable;
 import com.lothrazar.pickybags.net.PacketInsertBag;
 import com.lothrazar.pickybags.net.PacketOpenBag;
-import com.lothrazar.pickybags.net.PacketRegistry;
 import com.lothrazar.pickybags.registry.ModBagsRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
-@EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+//@EventBusSubscriber(modid = com.lothrazar.pickybags.ModBags.MODID, value = Dist.CLIENT)
 public class PickupClientEvents {
 
   //RIGHT CLICK to open bag
@@ -40,9 +40,9 @@ public class PickupClientEvents {
       Slot slotHit = gui.getSlotUnderMouse();
       ItemStack itemClicked = slotHit.getItem();
       if (itemClicked.getItem() instanceof IOpenable) {
-        PacketRegistry.INSTANCE.sendToServer(new PacketOpenBag(slotHit.getContainerSlot(), itemClicked.getItem(), isCuriosClick));
+        PacketDistributor.sendToServer(new PacketOpenBag(slotHit.getContainerSlot(), itemClicked.getItem(), isCuriosClick));
         event.setCanceled(true);
-        SoundUtil.playSound(Minecraft.getInstance().player, SoundEvents.UI_BUTTON_CLICK.get());
+        SoundUtil.playSound(Minecraft.getInstance().player, SoundEvents.UI_BUTTON_CLICK.value());
       }
     }
   }
@@ -64,8 +64,8 @@ public class PickupClientEvents {
           //
           if (pug.canInsert(mc.player.containerMenu.getCarried())) {
             int slotId = gui.getSlotUnderMouse().getContainerSlot();
-            SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK.get());
-            PacketRegistry.INSTANCE.sendToServer(new PacketInsertBag(slotId, stackTarget.getItem()));
+            SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK.value());
+            PacketDistributor.sendToServer(new PacketInsertBag(slotId, stackTarget.getItem()));
             event.setCanceled(true);
             //              return;
           }
@@ -85,28 +85,26 @@ public class PickupClientEvents {
       for (int x = 0; x < playerInventory.getContainerSize(); x++) {
         ItemStack stack = playerInventory.getItem(x);
         if (stack.getItem() instanceof IPickupable pu) {
-          //its edible food // it fits into the box 
+          //its edible food // it fits into the box
           pu.setBoxInsertable(stack, pu.canInsert(maybeFood));
         }
       }
     }
   }
 
-  @OnlyIn(Dist.CLIENT)
-  @SubscribeEvent
   public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
     event.register((stack, tintIndex) -> {
-      if (tintIndex == 0) { //layer zero is outline, ignore this 
+      if (tintIndex == 0) { //layer zero is outline, ignore this
         return 0xFFFFFFFF;
       }
-      //layer 1 is overlay  
+      //layer 1 is overlay
       return getColour(stack);
     }, ModBagsRegistry.PICKUP_TREES.get(), ModBagsRegistry.PICKUP_ROCKS.get(), ModBagsRegistry.PICKUP_PLANTS.get(), ModBagsRegistry.PICKUP_GEMS.get(), ModBagsRegistry.BOX.get());
   }
 
   private static int getColour(ItemStack stack) {
     if (stack.getItem() instanceof IPickupable &&
-        stack.hasTag() && stack.getTag().getBoolean(IPickupable.HOLDING)) {
+        stack.has(DataComponents.CUSTOM_DATA) && stack.get(DataComponents.CUSTOM_DATA).copyTag().getBoolean(IPickupable.HOLDING)) {
       // green? return 0x00AAAAFF;
       return 0x000000FF; //  0xFFFF0011;
     }

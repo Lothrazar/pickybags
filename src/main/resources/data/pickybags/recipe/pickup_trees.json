@@ -1,11 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " c ",
-    "l l",
-    "ldl"
+    " l ",
+    "wcw",
+    "wdw"
   ],
   "key": {
+    "w": {
+      "item": "minecraft:red_wool"
+    },
     "l": {
       "tag": "forge:leather"
     },
@@ -13,10 +16,10 @@
       "tag": "forge:chests/wooden"
     },
     "d": {
-      "item": "minecraft:copper_ingot"
+      "tag": "minecraft:logs"
     }
   },
   "result": {
-    "item": "pickybags:pickup_gems"
+    "id": "pickybags:pickup_trees"
   }
 }

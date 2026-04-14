@@ -15,6 +15,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
@@ -51,11 +52,12 @@ public class CraftingSlabContainer extends ContainerFlib {
     if (!world.isClientSide) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;
-      Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix, world);
+      Optional<RecipeHolder<CraftingRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix.asCraftInput(), world);
       if (optional.isPresent()) {
-        CraftingRecipe icraftingrecipe = optional.get();
-        if (craftResult.setRecipeUsed(world, player, icraftingrecipe)) {
-          itemstack = icraftingrecipe.assemble(craftMatrix, world.registryAccess());
+        RecipeHolder<CraftingRecipe> holder = optional.get();
+        if (craftResult.setRecipeUsed(world, player, holder)) {
+          //new .asCraftInput() for 1.21
+          itemstack = holder.value().assemble(craftMatrix.asCraftInput(), world.registryAccess());
         }
       }
       craftResult.setItem(0, itemstack);

@@ -2,53 +2,52 @@ package com.lothrazar.pickybags.event;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import com.lothrazar.library.util.SoundUtil;
 import com.lothrazar.pickybags.item.IPickupable;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 public class PickupEvents {
 
   @SubscribeEvent
-  public void onPlayerPickup(EntityItemPickupEvent event) {
-    if (event.getEntity() instanceof Player) {
-      Player player = event.getEntity();
-      ItemEntity itemEntity = event.getItem();
+  public void onPlayerPickup(ItemEntityPickupEvent.Pre event) { // was EntityItemPickupEvent
+//    if (event.getEntity() instanceof Player) {
+      Player player = event.getPlayer();
+      ItemEntity itemEntity = event.getItemEntity();
       ItemStack resultStack = itemEntity.getItem();
       int origCount = resultStack.getCount();
       for (ItemStack bag : getAllBagSlots(player)) {
         resultStack = tryInsert(bag, resultStack);
-        // loopback 
+        // loopback
         if (resultStack.isEmpty()) {
           break;
         }
       }
       if (resultStack.getCount() != origCount) { //eat it
         itemEntity.setItem(resultStack);
-        event.setResult(Result.ALLOW);
+//        event.setResult(net.neoforged.bus.api.Event.Result.ALLOW);
         SoundUtil.playSound(player, SoundEvents.ITEM_PICKUP);
       }
-    }
+
   }
 
   public static ItemStack tryInsert(final ItemStack bag, ItemStack itemPickup) {
     if (bag.getItem() instanceof IPickupable pug) {
       if (pug.canInsert(itemPickup)) {
         //its a pickup bag with insert allowed
-        AtomicReference<ItemStack> returnStack = new AtomicReference<>(ItemHandlerHelper.copyStackWithSize(itemPickup, itemPickup.getCount()));
-        bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(ih -> {
-          returnStack.set(ItemHandlerHelper.insertItem(ih, itemPickup, false));
-        });
-        return returnStack.get();
+        IItemHandler ih = bag.getCapability(Capabilities.ItemHandler.ITEM);
+        if (ih != null) {
+          itemPickup = ItemHandlerHelper.insertItem(ih, itemPickup, false);
+        }
+        return itemPickup;
       }
     }
     return itemPickup;

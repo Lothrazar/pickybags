@@ -20,6 +20,6 @@
     }
   },
   "result": {
-    "item": "pickybags:pickup_gems"
+    "id": "pickybags:pickup_gems"
   }
 }

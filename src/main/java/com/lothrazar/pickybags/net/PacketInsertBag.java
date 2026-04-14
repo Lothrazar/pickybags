@@ -1,42 +1,51 @@
 package com.lothrazar.pickybags.net;
 
-import java.util.function.Supplier;
-import com.lothrazar.library.packet.PacketFlib;
+import com.lothrazar.pickybags.ModBags;
 import com.lothrazar.pickybags.item.IPickupable;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PacketInsertBag extends PacketFlib {
+public record PacketInsertBag(int slot, Item item) implements CustomPacketPayload {
 
-  private int slot;
-  private Item item;
+  public static final Type<PacketInsertBag> TYPE = new Type<>(
+      ResourceLocation.fromNamespaceAndPath(ModBags.MODID, "insert_bag")
+  );
 
-  public PacketInsertBag(int slot, Item item) {
-    this.slot = slot;
-    this.item = item;
+  public static final StreamCodec<RegistryFriendlyByteBuf, PacketInsertBag> STREAM_CODEC =
+      StreamCodec.composite(
+          ByteBufCodecs.INT, PacketInsertBag::slot,
+          ByteBufCodecs.registry(Registries.ITEM), PacketInsertBag::item,
+          PacketInsertBag::new
+      );
+
+  @Override
+  public Type<? extends CustomPacketPayload> type() {
+    return TYPE;
   }
 
-  public static void handle(PacketInsertBag message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      ServerPlayer player = ctx.get().getSender();
-      if (message.item instanceof IPickupable pug) {
-        //put the thing in the bag
+  public static void handle(PacketInsertBag message, IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
+      ServerPlayer player = (ServerPlayer) ctx.player();
+      if (message.item() instanceof IPickupable pug) {
         ItemStack itemMouse = player.containerMenu.getCarried();
-        if (itemMouse.isEmpty()
-            && !pug.canInsert(itemMouse)) {
+        if (itemMouse.isEmpty() && !pug.canInsert(itemMouse)) {
           return;
         }
-        ItemStack theBag = player.getInventory().getItem(message.slot);//why is it air
-        IItemHandler boxCap = theBag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        ItemStack theBag = player.getInventory().getItem(message.slot());
+        IItemHandler boxCap = theBag.getCapability(Capabilities.ItemHandler.ITEM);
         if (boxCap == null) {
           return;
         }
-        //try to put/stack into each slot
         int i = 0;
         while (i < boxCap.getSlots()) {
           itemMouse = boxCap.insertItem(i, itemMouse, false);
@@ -45,15 +54,5 @@ public class PacketInsertBag extends PacketFlib {
         player.containerMenu.setCarried(itemMouse);
       }
     });
-    message.done(ctx);
-  }
-
-  public static PacketInsertBag decode(FriendlyByteBuf buf) {
-    return new PacketInsertBag(buf.readInt(), buf.readItem().getItem());
-  }
-
-  public static void encode(PacketInsertBag msg, FriendlyByteBuf buf) {
-    buf.writeInt(msg.slot);
-    buf.writeItem(new ItemStack(msg.item));
   }
 }

@@ -9,8 +9,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerLunchbox extends ContainerFlib {
 
@@ -29,12 +30,10 @@ public class ContainerLunchbox extends ContainerFlib {
       if (player.getMainHandItem().getItem() instanceof ItemLunchbox) {
         this.bag = player.getMainHandItem();
         this.slot = player.getInventory().selected;
-      }
-      else if (player.getOffhandItem().getItem() instanceof ItemLunchbox) {
+      } else if (player.getOffhandItem().getItem() instanceof ItemLunchbox) {
         this.bag = player.getOffhandItem();
         this.slot = 40;
-      }
-      else {
+      } else {
         for (int x = 0; x < playerInventory.getContainerSize(); x++) {
           ItemStack stack = playerInventory.getItem(x);
           if (stack.getItem() instanceof ItemLunchbox) {
@@ -45,7 +44,8 @@ public class ContainerLunchbox extends ContainerFlib {
         }
       }
     }
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+    if (h != null) {
       this.slotCount = h.getSlots();
       this.endInv = h.getSlots();
       for (int j = 0; j < 3; j++) {
@@ -53,7 +53,7 @@ public class ContainerLunchbox extends ContainerFlib {
           addSlot(new SlotItemHandler(h, k + j * 3, 62 + k * Const.SQ, 17 + j * Const.SQ));
         }
       }
-    });
+    }
     layoutPlayerInventorySlots(8, 84);
   }
 
@@ -66,7 +66,7 @@ public class ContainerLunchbox extends ContainerFlib {
   public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
     if (!(slotId < 0 || slotId >= this.slots.size())) {
       if (this.slots.get(slotId).getItem().is(ModBagsRegistry.BOX.get())) {
-        //lock the bag in place by returning  
+        //lock the bag in place by returning
         return;
       }
     }

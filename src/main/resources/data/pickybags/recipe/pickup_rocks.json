@@ -1,11 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " c ",
-    "l l",
-    "ldl"
+    " l ",
+    "wcw",
+    "wdw"
   ],
   "key": {
+    "w": {
+      "item": "minecraft:brown_wool"
+    },
     "l": {
       "tag": "forge:leather"
     },
@@ -17,6 +20,6 @@
     }
   },
   "result": {
-    "item": "pickybags:pickup_rocks"
+    "id": "pickybags:pickup_rocks"
   }
 }
