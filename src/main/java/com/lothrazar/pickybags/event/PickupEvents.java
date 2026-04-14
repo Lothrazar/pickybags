@@ -19,27 +19,24 @@ import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 public class PickupEvents {
 
-  @SubscribeEvent
-  public void test(ItemEntityPickupEvent.Post event) { // was EntityItemPickupEvent
-//    if (event.getEntity() instanceof Player) {
-    ModBags.LOGGER.debug(" Post event fired with getOriginalStack ::: ? " + event.getOriginalStack());
-    ModBags.LOGGER.debug(" Post event fired with getItemEntity ::: ? " + event.getItemEntity());
-    ModBags.LOGGER.debug(" Post event fired with getCurrentStack ::: ? " + event.getCurrentStack());
-  }
+//  @SubscribeEvent
+//  public void test(ItemEntityPickupEvent.Post event) {
+//    ModBags.LOGGER.debug(" Post event fired with getOriginalStack ::: ? " + event.getOriginalStack());
+//    ModBags.LOGGER.debug(" Post event fired with getItemEntity ::: ? " + event.getItemEntity());
+//    ModBags.LOGGER.debug(" Post event fired with getCurrentStack ::: ? " + event.getCurrentStack());
+//  }
 
   @SubscribeEvent
   public void onPlayerPickup(ItemEntityPickupEvent.Pre event) { // was EntityItemPickupEvent
-//    if (event.getEntity() instanceof Player) {
-    ModBags.LOGGER.debug(  " PRE event fired with state ::: ? " + event.canPickup());
 
-    if(event.canPickup() == TriState.TRUE)
-    {
-      // TODO
-    }
-      Player player = event.getPlayer();
       ItemEntity itemEntity = event.getItemEntity();
+      if (itemEntity.hasPickUpDelay()) {
+        //ex: if you throw an item, listen to the normal delay
+        return;
+      }
       ItemStack resultStack = itemEntity.getItem();
       int origCount = resultStack.getCount();
+      Player player = event.getPlayer();
 
       for (ItemStack bag : getAllBagSlots(player)) {
         resultStack = tryInsert(bag, resultStack);
@@ -52,12 +49,8 @@ public class PickupEvents {
         itemEntity.setItem(resultStack);
         SoundUtil.playSound(player, SoundEvents.ITEM_PICKUP);
         if (resultStack.isEmpty()) {
-          // dont pickup empty
+          //  block vanilla pickup of the empty
           event.setCanPickup(TriState.FALSE);
-        }
-        else {
-          // else pickup the rest ?
-          event.setCanPickup(TriState.TRUE);
         }
       }
 
@@ -65,13 +58,13 @@ public class PickupEvents {
 
   public static ItemStack tryInsert(final ItemStack bag, ItemStack itemPickup) {
     if (bag.getItem() instanceof IPickupable pug) {
-      ModBags.LOGGER.debug(pug+" Can Insert "+ itemPickup + " ::: ? " + pug.canInsert(itemPickup));
       if (pug.canInsert(itemPickup)) {
 
         //its a pickup bag with insert allowed
         IItemHandler ih = bag.getCapability(Capabilities.ItemHandler.ITEM);
         if (ih != null) {
           itemPickup = ItemHandlerHelper.insertItem(ih, itemPickup, false);
+          ModBags.LOGGER.debug(bag.getItem()  +" Insert item into bag " + itemPickup);
         }
         return itemPickup;
       }
