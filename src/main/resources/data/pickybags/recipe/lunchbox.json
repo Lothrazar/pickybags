@@ -10,10 +10,10 @@
       "item": "minecraft:copper_ingot"
     },
     "s": {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
     },
     "p": {
-      "tag": "forge:dyes/purple"
+      "tag": "c:dyes/purple"
     },
     "f": {
       "item": "minecraft:flint"

@@ -5,13 +5,13 @@
     "minecraft:clay_ball",
     "minecraft:clay",
     "#minecraft:stone_crafting_materials",
-    "#forge:cobblestone",
-    "#forge:netherrack",
-    "#forge:end_stones",
-    "#minecraft:dirt",
-    "#forge:stone",
-    "#forge:sand",
-    "#forge:sandstone",
-    "#forge:gravel"
+    "#c:cobblestone",
+    "#c:netherrack",
+    "#c:end_stones",
+    "#c:dirt",
+    "#c:stone",
+    "#c:sand",
+    "#c:sandstone",
+    "#c:gravel"
   ]
 }

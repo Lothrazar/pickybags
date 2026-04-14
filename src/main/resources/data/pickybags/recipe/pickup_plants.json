@@ -10,13 +10,13 @@
       "item": "minecraft:green_wool"
     },
     "c": {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
     },
     "l": {
-      "tag": "forge:leather"
+      "tag": "c:leather"
     },
     "d": {
-      "tag": "forge:seeds"
+      "tag": "c:seeds"
     }
   },
   "result": {

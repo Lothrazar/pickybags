@@ -6,8 +6,8 @@
     "#minecraft:wooden_slabs",
     "#minecraft:wooden_stairs",
     "#minecraft:saplings",
-    "#forge:rods/wooden",
-    "#forge:fence_gates/wooden",
-    "#forge:fences/wooden"
+    "#c:rods/wooden",
+    "#c:fence_gates/wooden",
+    "#c:fences/wooden"
   ]
 }
