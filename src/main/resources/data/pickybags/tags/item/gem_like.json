@@ -8,12 +8,12 @@
     "#c:ores",
     "#c:ingots",
     "#c:nuggets",
-    "#c:ores_in_ground/stone",
-    "#c:ores_in_ground/netherrack",
-    "#c:ores_in_ground/deepslate",
     "#c:gems",
     "#c:dusts",
-    "#c:nether_stars",
-    "#c:obsidian"
+    "#c:obsidians",
+    {"id": "#c:nether_stars",           "required": false},
+    {"id": "#c:ores_in_ground/stone",     "required": false},
+    {"id": "#c:ores_in_ground/netherrack","required": false},
+    {"id": "#c:ores_in_ground/deepslate", "required": false}
   ]
 }
