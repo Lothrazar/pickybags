@@ -34,14 +34,12 @@ public class PickupBagItem extends ItemCountContents implements IPickupable {
     super(properties.stacksTo(1).rarity( Rarity.RARE), new ItemFlib.Settings().tooltip());
   }
 
-
-
   //Right click to open
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
       int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
-      ((ServerPlayer) playerIn).openMenu(new PickupBagContainerProvider(slot, playerIn.getItemInHand(handIn).getItem()), buf -> {
+      playerIn.openMenu(new PickupBagContainerProvider(slot, playerIn.getItemInHand(handIn).getItem()), buf -> {
         buf.writeInt(slot);
 //        buf.writeItem(playerIn.getItemInHand(handIn));
         ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, playerIn.getItemInHand(handIn));
