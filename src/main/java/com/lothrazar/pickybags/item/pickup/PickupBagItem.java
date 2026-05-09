@@ -10,7 +10,6 @@ import com.lothrazar.pickybags.registry.ModBagsRegistry;
 import com.lothrazar.pickybags.registry.PickupTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -22,30 +21,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class PickupBagItem extends ItemCountContents implements IPickupable {
 
   public static final int SLOTS = 3 * 9;
 
   public PickupBagItem(Properties properties) {
-    super(properties.stacksTo(1), new ItemFlib.Settings().tooltip());
-  }
-
-  @Override
-  public Rarity getRarity(ItemStack stack) {
-    return Rarity.RARE;
-  }
-
-  @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-    return new PickupBagCapability(stack, nbt);
+    super(properties.stacksTo(1).rarity( Rarity.RARE), new ItemFlib.Settings().tooltip());
   }
 
   //Right click to open
@@ -53,9 +39,10 @@ public class PickupBagItem extends ItemCountContents implements IPickupable {
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
       int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
-      NetworkHooks.openScreen((ServerPlayer) playerIn, new PickupBagContainerProvider(slot, playerIn.getItemInHand(handIn).getItem()), buf -> {
+      playerIn.openMenu(new PickupBagContainerProvider(slot, playerIn.getItemInHand(handIn).getItem()), buf -> {
         buf.writeInt(slot);
-        buf.writeItem(playerIn.getItemInHand(handIn));
+//        buf.writeItem(playerIn.getItemInHand(handIn));
+        ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, playerIn.getItemInHand(handIn));
         buf.writeBoolean(false);
       });
     }
@@ -83,28 +70,22 @@ public class PickupBagItem extends ItemCountContents implements IPickupable {
   public InteractionResult useOn(UseOnContext context) {
     BlockPos pos = context.getClickedPos();
     Level world = context.getLevel();
-    BlockEntity te = world.getBlockEntity(pos);
-    if (te == null) {
-      return InteractionResult.PASS;
-    }
     Direction face = context.getClickedFace();
     ItemStack bag = context.getItemInHand();
-    // we assume the bag is valid here
-    var h = bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-    //
-    if (h instanceof ItemStackHandler handler && te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).isPresent()) {
-      IItemHandler teHandler = te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).orElse(null);
+    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler teHandler = world.getCapability(Capabilities.ItemHandler.BLOCK, pos, face);
+    if (h instanceof ItemStackHandler handler && teHandler != null) {
       // dump everything in there
       //the player knows whats in the bag and know where they are dumping into
       for (int i = 0; i < handler.getSlots(); i++) {
         ItemStack stack = handler.getStackInSlot(i);
-        ItemStack remaining = ItemHandlerHelper.copyStackWithSize(stack, stack.getCount());
+        ItemStack remaining = stack.copyWithCount(stack.getCount());//ItemHandlerHelper.copyStackWithSize(stack, stack.getCount());
         if (!stack.isEmpty()) {
           remaining = ItemHandlerHelper.insertItem(teHandler, stack, false);
           handler.setStackInSlot(i, remaining);
         }
       }
-      SoundUtil.playSound(context.getPlayer(), SoundEvents.UI_BUTTON_CLICK.get());
+      SoundUtil.playSound(context.getPlayer(), SoundEvents.UI_BUTTON_CLICK.value());
       return InteractionResult.SUCCESS;
     }
     return InteractionResult.PASS;

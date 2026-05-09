@@ -3,12 +3,11 @@
   "values": [
     "#minecraft:flowers",
     "#minecraft:leaves",
-    "#minecraft:leaves",
     "minecraft:bamboo",
     "minecraft:sugar_cane",
-    "#forge:crops",
-    "#forge:plants",
-    "#forge:mushrooms",
-    "#forge:seeds"
+    "#c:crops",
+    "#c:plants",
+    "#c:mushrooms",
+    "#c:seeds"
   ]
 }

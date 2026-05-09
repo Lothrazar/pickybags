@@ -7,19 +7,19 @@
   ],
   "key": {
     "w": {
-      "item": "minecraft:magenta_wool"
+      "item": "minecraft:red_wool"
     },
     "l": {
-      "tag": "forge:leather"
+      "tag": "c:leather"
     },
     "c": {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
     },
     "d": {
-      "item": "minecraft:copper_ingot"
+      "tag": "minecraft:logs"
     }
   },
   "result": {
-    "item": "pickybags:pickup_gems"
+    "id": "pickybags:pickup_trees"
   }
 }

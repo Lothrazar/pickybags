@@ -25,8 +25,10 @@ package com.lothrazar.pickybags.item.foodbox;
 
 import com.lothrazar.library.item.ItemFlib;
 import com.lothrazar.library.util.ChatUtil;
+import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.pickybags.item.IPickupable;
 import com.lothrazar.pickybags.item.ItemCountContents;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -37,10 +39,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class ItemLunchbox extends ItemCountContents implements IPickupable {
 
@@ -52,12 +52,7 @@ public class ItemLunchbox extends ItemCountContents implements IPickupable {
   }
 
   @Override
-  public Rarity getRarity(ItemStack stack) {
-    return Rarity.UNCOMMON;
-  }
-
-  @Override
-  public int getUseDuration(ItemStack st) {
+  public int getUseDuration(ItemStack st, LivingEntity user) {
     return 34;
   }
 
@@ -68,7 +63,7 @@ public class ItemLunchbox extends ItemCountContents implements IPickupable {
 
   @Override
   public boolean isBarVisible(ItemStack stack) {
-    return stack.hasTag() || super.isBarVisible(stack);
+    return stack.has(DataComponents.CUSTOM_DATA) || super.isBarVisible(stack);
   }
 
   //show emptiness in fake durability bar
@@ -79,24 +74,25 @@ public class ItemLunchbox extends ItemCountContents implements IPickupable {
 
   @Override
   public int getBarWidth(ItemStack stack) {
-    if (!stack.hasTag()) {
+    if (!stack.has(DataComponents.CUSTOM_DATA)) {
       return 0;
     }
-    float max = stack.getTag().getInt(COUNT_MAX);
-    float current = max - stack.getTag().getInt(COUNT_EMPTY);
+    CompoundTag tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
+    float max = tag.getInt(COUNT_MAX);
+    float current = max - tag.getInt(COUNT_EMPTY);
     return (max == 0) ? 0 : Math.round(13.0F * current / max);
   }
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
     if (!worldIn.isClientSide && entityLiving instanceof Player player) {
-      IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+      IItemHandler handler = stack.getCapability(Capabilities.ItemHandler.ITEM);
       if (handler != null) {
         ItemStack found = ItemStack.EMPTY;
         //just go left to right and eat in order
         for (int i = 0; i < handler.getSlots(); i++) {
           ItemStack test = handler.getStackInSlot(i);
-          if (test.isEdible() && !player.getCooldowns().isOnCooldown(test.getItem())) {
+          if (ItemStackUtil.isEdible(test) && !player.getCooldowns().isOnCooldown(test.getItem())) {
             found = test;
             break;
           }
@@ -116,21 +112,20 @@ public class ItemLunchbox extends ItemCountContents implements IPickupable {
     if (playerIn.isCrouching()) {
       if (!worldIn.isClientSide) {
         int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
-        NetworkHooks.openScreen((ServerPlayer) playerIn, new ContainerProviderLunchbox(slot), buf -> buf.writeInt(slot));
+        ((ServerPlayer) playerIn).openMenu(new ContainerProviderLunchbox(slot), buf -> buf.writeInt(slot));
       }
       return super.use(worldIn, playerIn, handIn);
-    }
-    else if (playerIn.canEat(false)) {
+    } else if (playerIn.canEat(false)) {
       //not crouching so try to eat it
-      //if we arent full 
+      //if we arent full
       playerIn.startUsingItem(handIn);
     }
     return super.use(worldIn, playerIn, handIn);
   }
 
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-    return new CapabilityLunchbox(stack, nbt);
+  public boolean canInsert(ItemStack itemPickup) {
+    return ItemStackUtil.isEdible(itemPickup);
   }
   //
   //  public static void setHoldingEdible(ItemStack box, boolean edible) {
@@ -144,9 +139,4 @@ public class ItemLunchbox extends ItemCountContents implements IPickupable {
   //    }
   //    return 0xFFFFFFFF;
   //  }
-
-  @Override
-  public boolean canInsert(ItemStack itemPickup) {
-    return itemPickup.isEdible();
-  }
 }

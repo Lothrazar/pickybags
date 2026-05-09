@@ -9,8 +9,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class PickupBagContainer extends ContainerFlib {
 
@@ -24,8 +25,7 @@ public class PickupBagContainer extends ContainerFlib {
     this.slot = slot;
     if (isCurios) {
       this.bag = CuriosUtil.getInSlot(player, slot, item);
-    }
-    else {
+    } else {
       this.bag = playerInventory.getItem(slot);
     }
     //now open it up
@@ -34,12 +34,10 @@ public class PickupBagContainer extends ContainerFlib {
       if (player.getMainHandItem().getItem() == item) {
         this.bag = player.getMainHandItem();
         this.slot = player.getInventory().selected;
-      }
-      else if (player.getOffhandItem().getItem() == item) {
+      } else if (player.getOffhandItem().getItem() == item) {
         this.bag = player.getOffhandItem();
         this.slot = 40;
-      }
-      else {
+      } else {
         for (int x = 0; x < playerInventory.getContainerSize(); x++) {
           ItemStack stack = playerInventory.getItem(x);
           if (stack.getItem() == item) {
@@ -50,7 +48,8 @@ public class PickupBagContainer extends ContainerFlib {
         }
       }
     }
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+    if (h != null) {
       this.endInv = h.getSlots();
       final int numRows = 3;
       for (int j = 0; j < numRows; ++j) {
@@ -60,7 +59,7 @@ public class PickupBagContainer extends ContainerFlib {
               Const.SQ + j * Const.SQ));
         }
       }
-    });
+    }
     layoutPlayerInventorySlots(8, 84);
   }
 

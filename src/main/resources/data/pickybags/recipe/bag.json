@@ -7,16 +7,16 @@
   ],
   "key": {
     "s": {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
     },
     "l": {
-      "tag": "forge:leather"
+      "tag": "c:leather"
     },
     "f": {
       "item": "minecraft:flint"
     }
   },
   "result": {
-    "item": "pickybags:bag"
+    "id": "pickybags:bag"
   }
 }

@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:flint",
+    "#minecraft:coals",
+    "#c:raw_materials",
+    "#c:storage_blocks",
+    "#c:ores",
+    "#c:ingots",
+    "#c:nuggets",
+    "#c:gems",
+    "#c:dusts",
+    "#c:obsidians",
+    {"id": "#c:nether_stars",           "required": false},
+    {"id": "#c:ores_in_ground/stone",     "required": false},
+    {"id": "#c:ores_in_ground/netherrack","required": false},
+    {"id": "#c:ores_in_ground/deepslate", "required": false}
+  ]
+}

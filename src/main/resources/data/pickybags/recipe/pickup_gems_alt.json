@@ -7,16 +7,16 @@
   ],
   "key": {
     "l": {
-      "tag": "forge:leather"
+      "tag": "c:leather"
     },
     "c": {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
     },
     "d": {
-      "tag": "minecraft:logs"
+      "item": "minecraft:copper_ingot"
     }
   },
   "result": {
-    "item": "pickybags:pickup_trees"
+    "id": "pickybags:pickup_gems"
   }
 }

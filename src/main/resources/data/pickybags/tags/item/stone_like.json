@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:terracotta",
+    "minecraft:clay_ball",
+    "minecraft:clay",
+    "#minecraft:stone_crafting_materials",
+    "#c:cobblestones",
+    "#c:stones",
+    "#c:gravels",
+    "#c:sands",
+    "#c:sandstone/blocks",
+    "#c:dirts",
+    {"id": "#c:netherracks", "required": false},
+    {"id": "#c:end_stones",  "required": false}
+  ]
+}

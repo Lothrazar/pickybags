@@ -1,23 +1,18 @@
 package com.lothrazar.pickybags.net;
 
-import com.lothrazar.pickybags.ModBags;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class PacketRegistry {
 
-  private static final String PROTOCOL_VERSION = Integer.toString(1);
-  public static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder
-      .named(new ResourceLocation(ModBags.MODID, "main_channel"))
-      .clientAcceptedVersions(PROTOCOL_VERSION::equals)
-      .serverAcceptedVersions(PROTOCOL_VERSION::equals)
-      .networkProtocolVersion(() -> PROTOCOL_VERSION)
-      .simpleChannel();
+  public static void setup(IEventBus bus) {
+    bus.addListener(PacketRegistry::registerPayloads);
+  }
 
-  public static void setup() {
-    int id = 0;
-    INSTANCE.registerMessage(id++, PacketOpenBag.class, PacketOpenBag::encode, PacketOpenBag::decode, PacketOpenBag::handle);
-    INSTANCE.registerMessage(id++, PacketInsertBag.class, PacketInsertBag::encode, PacketInsertBag::decode, PacketInsertBag::handle);
+  private static void registerPayloads(RegisterPayloadHandlersEvent event) {
+    PayloadRegistrar registrar = event.registrar("1");
+    registrar.playToServer(PacketOpenBag.TYPE, PacketOpenBag.STREAM_CODEC, PacketOpenBag::handle);
+    registrar.playToServer(PacketInsertBag.TYPE, PacketInsertBag.STREAM_CODEC, PacketInsertBag::handle);
   }
 }

@@ -1,5 +1,5 @@
 {
-  "replace": "false",
+  "replace": false,
   "values": [                                      
     {"id":  "pickybags:pickup_gems",                  "required":false}, 
     {"id":  "pickybags:pickup_plants",             "required":false}, 

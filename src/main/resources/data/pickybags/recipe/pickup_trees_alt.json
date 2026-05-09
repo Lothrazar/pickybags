@@ -7,16 +7,16 @@
   ],
   "key": {
     "l": {
-      "tag": "forge:leather"
+      "tag": "c:leather"
     },
     "c": {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
     },
     "d": {
-      "item": "minecraft:cobblestone"
+      "tag": "minecraft:logs"
     }
   },
   "result": {
-    "item": "pickybags:pickup_rocks"
+    "id": "pickybags:pickup_trees"
   }
 }

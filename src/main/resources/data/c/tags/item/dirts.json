@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:dirt",
+    "minecraft:farmland",
+    "minecraft:dirt_path",
+    {"id": "biomesoplenty:dried_salt",    "required": false},
+    {"id": "biomesoplenty:mud",           "required": false},
+    {"id": "biomesoplenty:mud_dirt",      "required": false},
+    {"id": "biomesoplenty:sandy_dirt",    "required": false},
+    {"id": "biomesoplenty:garden_soil",   "required": false},
+    {"id": "byg:peat_block",             "required": false},
+    {"id": "byg:lush_dirt",              "required": false},
+    {"id": "byg:lush_grass_block",       "required": false},
+    {"id": "byg:ether_soil",             "required": false},
+    {"id": "byg:boric_dirt",             "required": false},
+    {"id": "byg:cryptic_dirt",           "required": false}
+  ]
+}

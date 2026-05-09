@@ -10,17 +10,17 @@
       "item": "minecraft:copper_ingot"
     },
     "s": {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
     },
     "p": {
-      "tag": "forge:dyes/purple"
+      "tag": "c:dyes/purple"
     },
     "f": {
       "item": "minecraft:flint"
     }
   },
   "result": {
-    "item": "pickybags:lunchbox",
+    "id": "pickybags:lunchbox",
     "count": 1
   }
 }

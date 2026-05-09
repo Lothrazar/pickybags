@@ -6,17 +6,17 @@
     "ldl"
   ],
   "key": {
-    "l": {
-      "tag": "forge:leather"
-    },
     "c": {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
+    },
+    "l": {
+      "tag": "c:leather"
     },
     "d": {
-      "item": "minecraft:copper_ingot"
+      "tag": "c:seeds"
     }
   },
   "result": {
-    "item": "pickybags:pickup_gems"
+    "id": "pickybags:pickup_plants"
   }
 }
