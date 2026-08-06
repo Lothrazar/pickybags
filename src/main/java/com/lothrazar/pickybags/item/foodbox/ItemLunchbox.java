@@ -32,12 +32,12 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -57,8 +57,8 @@ public class ItemLunchbox extends ItemCountContents implements IPickupable {
   }
 
   @Override
-  public UseAnim getUseAnimation(ItemStack st) {
-    return UseAnim.EAT;
+  public ItemUseAnimation getUseAnimation(ItemStack st) {
+    return ItemUseAnimation.EAT;
   }
 
   @Override
@@ -78,21 +78,21 @@ public class ItemLunchbox extends ItemCountContents implements IPickupable {
       return 0;
     }
     CompoundTag tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
-    float max = tag.getInt(COUNT_MAX);
-    float current = max - tag.getInt(COUNT_EMPTY);
+    float max = tag.getIntOr(COUNT_MAX, 0);
+    float current = max - tag.getIntOr(COUNT_EMPTY, 0);
     return (max == 0) ? 0 : Math.round(13.0F * current / max);
   }
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-    if (!worldIn.isClientSide && entityLiving instanceof Player player) {
-      IItemHandler handler = stack.getCapability(Capabilities.ItemHandler.ITEM);
+    if (!worldIn.isClientSide() && entityLiving instanceof Player player) {
+      IItemHandler handler = com.lothrazar.pickybags.CapabilityUtil.getItemHandler(stack);
       if (handler != null) {
         ItemStack found = ItemStack.EMPTY;
         //just go left to right and eat in order
         for (int i = 0; i < handler.getSlots(); i++) {
           ItemStack test = handler.getStackInSlot(i);
-          if (ItemStackUtil.isEdible(test) && !player.getCooldowns().isOnCooldown(test.getItem())) {
+          if (ItemStackUtil.isEdible(test) && !player.getCooldowns().isOnCooldown(test)) {
             found = test;
             break;
           }
@@ -108,10 +108,10 @@ public class ItemLunchbox extends ItemCountContents implements IPickupable {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (playerIn.isCrouching()) {
-      if (!worldIn.isClientSide) {
-        int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
+      if (!worldIn.isClientSide()) {
+        int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().getSelectedSlot() : 40;
         ((ServerPlayer) playerIn).openMenu(new ContainerProviderLunchbox(slot), buf -> buf.writeInt(slot));
       }
       return super.use(worldIn, playerIn, handIn);

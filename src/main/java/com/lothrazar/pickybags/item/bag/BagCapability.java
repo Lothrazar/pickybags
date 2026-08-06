@@ -3,6 +3,10 @@ package com.lothrazar.pickybags.item.bag;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
@@ -34,14 +38,17 @@ public class BagCapability extends ItemStackHandler {
     if (provider == null) return;
     CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     if (!tag.isEmpty()) {
-      this.deserializeNBT(provider, tag);
+      ValueInput input = TagValueInput.create(ProblemReporter.DISCARDING, provider, tag);
+      this.deserialize(input);
     }
   }
 
   private void save() {
     HolderLookup.Provider provider = getProvider();
     if (provider == null) return;
-    CompoundTag tag = this.serializeNBT(provider);
+    TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, provider);
+    this.serialize(output);
+    CompoundTag tag = output.buildResult();
     int emptySlots = 0;
     for (int i = 0; i < getSlots(); i++) {
       if (getStackInSlot(i).isEmpty()) emptySlots++;

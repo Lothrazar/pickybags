@@ -33,7 +33,7 @@ public class PickupBagContainer extends ContainerFlib {
       ModBags.LOGGER.error("error: bag not found from client slot" + item + " vs found " + bag);
       if (player.getMainHandItem().getItem() == item) {
         this.bag = player.getMainHandItem();
-        this.slot = player.getInventory().selected;
+        this.slot = player.getInventory().getSelectedSlot();
       } else if (player.getOffhandItem().getItem() == item) {
         this.bag = player.getOffhandItem();
         this.slot = 40;
@@ -48,7 +48,7 @@ public class PickupBagContainer extends ContainerFlib {
         }
       }
     }
-    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler h = com.lothrazar.pickybags.CapabilityUtil.getItemHandler(bag);
     if (h != null) {
       this.endInv = h.getSlots();
       final int numRows = 3;

@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.common.util.TriState;
+import net.minecraft.util.TriState;
 import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
@@ -61,7 +61,7 @@ public class PickupEvents {
       if (pug.canInsert(itemPickup)) {
 
         //its a pickup bag with insert allowed
-        IItemHandler ih = bag.getCapability(Capabilities.ItemHandler.ITEM);
+        IItemHandler ih = com.lothrazar.pickybags.CapabilityUtil.getItemHandler(bag);
         if (ih != null) {
           itemPickup = ItemHandlerHelper.insertItem(ih, itemPickup, false);
           ModBags.LOGGER.debug(bag.getItem()  +" Insert item into bag " + itemPickup);

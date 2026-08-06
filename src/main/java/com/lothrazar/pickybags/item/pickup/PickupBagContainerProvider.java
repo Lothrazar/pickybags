@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class PickupBagContainerProvider implements MenuProvider {
 
@@ -25,7 +26,7 @@ public class PickupBagContainerProvider implements MenuProvider {
 
   @Override
   public Component getDisplayName() {
-    return item.getDescription();
+    return item.getName(new ItemStack(item));
   }
 
   @Override

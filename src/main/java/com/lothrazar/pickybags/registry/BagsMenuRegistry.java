@@ -6,7 +6,7 @@ import com.lothrazar.pickybags.item.foodbox.ContainerLunchbox;
 import com.lothrazar.pickybags.item.pickup.PickupBagContainer;
 import com.lothrazar.pickybags.item.slab.CraftingSlabContainer;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
@@ -16,10 +16,10 @@ import java.util.function.Supplier;
 
 public class BagsMenuRegistry {
 
-  public static final ResourceLocation V_CRAFTING = ResourceLocation.withDefaultNamespace("textures/gui/container/crafting_table.png");
-  public static final ResourceLocation GENERIC_54 = ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
-  public static final ResourceLocation SQUARE = ResourceLocation.withDefaultNamespace("textures/gui/container/dispenser.png");
-  public static final ResourceLocation SHULKER = ResourceLocation.withDefaultNamespace("textures/gui/container/shulker_box.png");
+  public static final Identifier V_CRAFTING = Identifier.withDefaultNamespace("textures/gui/container/crafting_table.png");
+  public static final Identifier GENERIC_54 = Identifier.withDefaultNamespace("textures/gui/container/generic_54.png");
+  public static final Identifier SQUARE = Identifier.withDefaultNamespace("textures/gui/container/dispenser.png");
+  public static final Identifier SHULKER = Identifier.withDefaultNamespace("textures/gui/container/shulker_box.png");
   public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(Registries.MENU, ModBags.MODID);
   public static final Supplier<MenuType<CraftingSlabContainer>> SLAB = CONTAINERS.register("slab", () -> IMenuTypeExtension.create((windowId, inv, data) -> new CraftingSlabContainer(windowId, inv, inv.player, data.readInt())));
   public static final Supplier<MenuType<BagContainer>> BAG = CONTAINERS.register("bag", () -> IMenuTypeExtension.create((windowId, inv, data) -> new BagContainer(windowId, inv, inv.player, data.readInt())));

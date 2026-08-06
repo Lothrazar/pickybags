@@ -7,7 +7,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +18,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public record PacketInsertBag(int slot, Item item) implements CustomPacketPayload {
 
   public static final Type<PacketInsertBag> TYPE = new Type<>(
-      ResourceLocation.fromNamespaceAndPath(ModBags.MODID, "insert_bag")
+      Identifier.fromNamespaceAndPath(ModBags.MODID, "insert_bag")
   );
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketInsertBag> STREAM_CODEC =
@@ -42,7 +42,7 @@ public record PacketInsertBag(int slot, Item item) implements CustomPacketPayloa
           return;
         }
         ItemStack theBag = player.getInventory().getItem(message.slot());
-        IItemHandler boxCap = theBag.getCapability(Capabilities.ItemHandler.ITEM);
+        IItemHandler boxCap = com.lothrazar.pickybags.CapabilityUtil.getItemHandler(theBag);
         if (boxCap == null) {
           return;
         }

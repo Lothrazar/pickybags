@@ -10,7 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +36,7 @@ public class ModBagsRegistry {
   public static final DeferredHolder<Item, PickupBagItem> PICKUP_GEMS = ITEMS.register("pickup_gems", () -> new PickupBagItem(new Item.Properties()));
   public static final DeferredHolder<Item, PickupBagItem> PICKUP_PLANTS = ITEMS.register("pickup_plants", () -> new PickupBagItem(new Item.Properties()));
   public static final DeferredHolder<Item, PickupBagItem> PICKUP_TREES = ITEMS.register("pickup_trees", () -> new PickupBagItem(new Item.Properties()));
-  private static final ResourceKey<CreativeModeTab> TAB = ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.fromNamespaceAndPath(ModBags.MODID, "tab"));
+  private static final ResourceKey<CreativeModeTab> TAB = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.fromNamespaceAndPath(ModBags.MODID, "tab"));
 
   static {
     // was  public static void onCreativeModeTabRegister(RegisterEvent event) {

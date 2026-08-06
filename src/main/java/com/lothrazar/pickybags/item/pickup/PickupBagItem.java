@@ -14,7 +14,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -36,9 +35,9 @@ public class PickupBagItem extends ItemCountContents implements IPickupable {
 
   //Right click to open
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    if (!worldIn.isClientSide && !playerIn.isCrouching()) {
-      int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide() && !playerIn.isCrouching()) {
+      int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().getSelectedSlot() : 40;
       playerIn.openMenu(new PickupBagContainerProvider(slot, playerIn.getItemInHand(handIn).getItem()), buf -> {
         buf.writeInt(slot);
 //        buf.writeItem(playerIn.getItemInHand(handIn));
@@ -72,8 +71,8 @@ public class PickupBagItem extends ItemCountContents implements IPickupable {
     Level world = context.getLevel();
     Direction face = context.getClickedFace();
     ItemStack bag = context.getItemInHand();
-    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
-    IItemHandler teHandler = world.getCapability(Capabilities.ItemHandler.BLOCK, pos, face);
+    IItemHandler h = com.lothrazar.pickybags.CapabilityUtil.getItemHandler(bag);
+    IItemHandler teHandler = com.lothrazar.pickybags.CapabilityUtil.getItemHandler(world, pos, face);
     if (h instanceof ItemStackHandler handler && teHandler != null) {
       // dump everything in there
       //the player knows whats in the bag and know where they are dumping into

@@ -7,7 +7,7 @@ import com.lothrazar.pickybags.registry.BagsMenuRegistry;
 import com.lothrazar.pickybags.registry.ModBagsRegistry;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -29,7 +29,7 @@ public class ContainerLunchbox extends ContainerFlib {
       ModBags.LOGGER.error("error: bag not found from client slot");
       if (player.getMainHandItem().getItem() instanceof ItemLunchbox) {
         this.bag = player.getMainHandItem();
-        this.slot = player.getInventory().selected;
+        this.slot = player.getInventory().getSelectedSlot();
       } else if (player.getOffhandItem().getItem() instanceof ItemLunchbox) {
         this.bag = player.getOffhandItem();
         this.slot = 40;
@@ -44,7 +44,7 @@ public class ContainerLunchbox extends ContainerFlib {
         }
       }
     }
-    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler h = com.lothrazar.pickybags.CapabilityUtil.getItemHandler(bag);
     if (h != null) {
       this.slotCount = h.getSlots();
       this.endInv = h.getSlots();
@@ -63,7 +63,7 @@ public class ContainerLunchbox extends ContainerFlib {
   }
 
   @Override
-  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ContainerInput clickTypeIn, Player player) {
     if (!(slotId < 0 || slotId >= this.slots.size())) {
       if (this.slots.get(slotId).getItem().is(ModBagsRegistry.BOX.get())) {
         //lock the bag in place by returning

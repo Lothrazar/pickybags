@@ -14,7 +14,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +23,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public record PacketOpenBag(int slot, Item item, boolean isCurios) implements CustomPacketPayload {
 
   public static final Type<PacketOpenBag> TYPE = new Type<>(
-      ResourceLocation.fromNamespaceAndPath(ModBags.MODID, "open_bag")
+      Identifier.fromNamespaceAndPath(ModBags.MODID, "open_bag")
   );
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketOpenBag> STREAM_CODEC =

@@ -12,19 +12,19 @@ public class ModCapabilities {
 
   @SubscribeEvent
   public static void register(RegisterCapabilitiesEvent event) {
-    event.registerItem(Capabilities.ItemHandler.ITEM,
-        (stack, ctx) -> new BagCapability(stack),
+    event.registerItem(Capabilities.Item.ITEM,
+        (stack, ctx) -> new IItemHandlerResourceHandler(new BagCapability(stack)),
         ModBagsRegistry.BAG.get()
     );
-    event.registerItem(Capabilities.ItemHandler.ITEM,
-        (stack, ctx) -> new PickupBagCapability(stack),
+    event.registerItem(Capabilities.Item.ITEM,
+        (stack, ctx) -> new IItemHandlerResourceHandler(new PickupBagCapability(stack)),
         ModBagsRegistry.PICKUP_ROCKS.get(),
         ModBagsRegistry.PICKUP_GEMS.get(),
         ModBagsRegistry.PICKUP_PLANTS.get(),
         ModBagsRegistry.PICKUP_TREES.get()
     );
-    event.registerItem(Capabilities.ItemHandler.ITEM,
-        (stack, ctx) -> new CapabilityLunchbox(stack),
+    event.registerItem(Capabilities.Item.ITEM,
+        (stack, ctx) -> new IItemHandlerResourceHandler(new CapabilityLunchbox(stack)),
         ModBagsRegistry.BOX.get()
     );
   }

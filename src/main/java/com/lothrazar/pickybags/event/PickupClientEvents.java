@@ -1,16 +1,17 @@
 package com.lothrazar.pickybags.event;
 
 import com.lothrazar.library.util.SoundUtil;
+import com.lothrazar.pickybags.ModBags;
 import com.lothrazar.pickybags.item.IOpenable;
 import com.lothrazar.pickybags.item.IPickupable;
+import com.lothrazar.pickybags.item.PickupHoldingTintSource;
 import com.lothrazar.pickybags.net.PacketInsertBag;
 import com.lothrazar.pickybags.net.PacketOpenBag;
-import com.lothrazar.pickybags.registry.ModBagsRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
@@ -19,7 +20,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 //@EventBusSubscriber(modid = com.lothrazar.pickybags.ModBags.MODID, value = Dist.CLIENT)
 public class PickupClientEvents {
@@ -38,7 +39,7 @@ public class PickupClientEvents {
       Slot slotHit = gui.getSlotUnderMouse();
       ItemStack itemClicked = slotHit.getItem();
       if (itemClicked.getItem() instanceof IOpenable) {
-        PacketDistributor.sendToServer(new PacketOpenBag(slotHit.getContainerSlot(), itemClicked.getItem(), isCuriosClick));
+        ClientPacketDistributor.sendToServer(new PacketOpenBag(slotHit.getContainerSlot(), itemClicked.getItem(), isCuriosClick));
         event.setCanceled(true);
         SoundUtil.playSound(Minecraft.getInstance().player, SoundEvents.UI_BUTTON_CLICK.value());
       }
@@ -63,7 +64,7 @@ public class PickupClientEvents {
           if (pug.canInsert(mc.player.containerMenu.getCarried())) {
             int slotId = gui.getSlotUnderMouse().getContainerSlot();
             SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK.value());
-            PacketDistributor.sendToServer(new PacketInsertBag(slotId, stackTarget.getItem()));
+            ClientPacketDistributor.sendToServer(new PacketInsertBag(slotId, stackTarget.getItem()));
             event.setCanceled(true);
             //              return;
           }
@@ -90,22 +91,9 @@ public class PickupClientEvents {
     }
   }
 
-  public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-    event.register((stack, tintIndex) -> {
-      if (tintIndex == 0) { //layer zero is outline, ignore this
-        return 0xFFFFFFFF;
-      }
-      //layer 1 is overlay
-      return getColour(stack);
-    }, ModBagsRegistry.PICKUP_TREES.get(), ModBagsRegistry.PICKUP_ROCKS.get(), ModBagsRegistry.PICKUP_PLANTS.get(), ModBagsRegistry.PICKUP_GEMS.get(), ModBagsRegistry.BOX.get());
-  }
-
-  private static int getColour(ItemStack stack) {
-    if (stack.getItem() instanceof IPickupable &&
-        stack.has(DataComponents.CUSTOM_DATA) && stack.get(DataComponents.CUSTOM_DATA).copyTag().getBoolean(IPickupable.HOLDING)) {
-      // green? return 0x00AAAAFF;
-      return 0x000000FF; //  0xFFFF0011;
-    }
-    return 0xFFFFFFFF;
+  //item colors are fully data-driven now; this just registers the tint source *type*,
+  //actual per-item tint assignment happens in assets/pickybags/items/*.json
+  public static void registerItemColors(RegisterColorHandlersEvent.ItemTintSources event) {
+    event.register(Identifier.fromNamespaceAndPath(ModBags.MODID, "pickup_holding"), PickupHoldingTintSource.MAP_CODEC);
   }
 }

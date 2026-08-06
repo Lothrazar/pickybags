@@ -38,7 +38,7 @@ public class ModBags {
     bus.addListener(this::setupClient);
     bus.addListener(ModCapabilities::register);
     PacketRegistry.setup(bus);
-    if (FMLEnvironment.dist == net.neoforged.api.distmarker.Dist.CLIENT) {
+    if (FMLEnvironment.getDist() == net.neoforged.api.distmarker.Dist.CLIENT) {
       bus.addListener(PickupClientEvents::registerItemColors);
     }
   }

@@ -10,20 +10,20 @@ import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 @JeiPlugin
 public class BagsPluginJEI implements IModPlugin {
 
   private static final int PLAYER_INV_SIZE = 4 * 9;
-  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModBags.MODID, "jei");
+  private static final Identifier ID = Identifier.fromNamespaceAndPath(ModBags.MODID, "jei");
 
   @Override
   public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {}
 
   @Override
-  public ResourceLocation getPluginUid() {
+  public Identifier getPluginUid() {
     return ID;
   }
 

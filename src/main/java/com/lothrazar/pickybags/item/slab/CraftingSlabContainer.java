@@ -49,15 +49,15 @@ public class CraftingSlabContainer extends ContainerFlib {
   @Override
   public void slotsChanged(Container inventory) {
     Level world = playerInventory.player.level();
-    if (!world.isClientSide) {
+    if (!world.isClientSide()) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;
       Optional<RecipeHolder<CraftingRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix.asCraftInput(), world);
       if (optional.isPresent()) {
         RecipeHolder<CraftingRecipe> holder = optional.get();
-        if (craftResult.setRecipeUsed(world, player, holder)) {
+        if (craftResult.setRecipeUsed(player, holder)) {
           //new .asCraftInput() for 1.21
-          itemstack = holder.value().assemble(craftMatrix.asCraftInput(), world.registryAccess());
+          itemstack = holder.value().assemble(craftMatrix.asCraftInput());
         }
       }
       craftResult.setItem(0, itemstack);
