@@ -3,6 +3,7 @@ package com.lothrazar.pickybags.item.bag;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.gui.ContainerFlib;
 import com.lothrazar.pickybags.ModBags;
+import com.lothrazar.pickybags.SlotItemHandlerFix;
 import com.lothrazar.pickybags.registry.BagsMenuRegistry;
 import com.lothrazar.pickybags.registry.ModBagsRegistry;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,7 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class BagContainer extends ContainerFlib {
 
@@ -51,7 +51,7 @@ public class BagContainer extends ContainerFlib {
       final int numRows = 6;
       for (int j = 0; j < numRows; ++j) {
         for (int k = 0; k < 9; ++k) {
-          this.addSlot(new SlotItemHandler(h, k + j * 9,
+          this.addSlot(new SlotItemHandlerFix(h, k + j * 9,
               8 + k * Const.SQ,
               Const.SQ + j * Const.SQ));
         }

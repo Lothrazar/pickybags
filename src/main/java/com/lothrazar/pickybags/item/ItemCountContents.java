@@ -9,8 +9,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 /**
  * TODO: contribute to FLIB
@@ -26,7 +24,6 @@ public class ItemCountContents extends ItemFlib {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay,
       java.util.function.Consumer<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);

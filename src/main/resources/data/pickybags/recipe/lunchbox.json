@@ -6,18 +6,10 @@
     "ccc"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:copper_ingot"
-    },
-    "s": {
-      "tag": "c:chests/wooden"
-    },
-    "p": {
-      "tag": "c:dyes/purple"
-    },
-    "f": {
-      "item": "minecraft:flint"
-    }
+    "c": "minecraft:copper_ingot",
+    "s": "#c:chests/wooden",
+    "p": "#c:dyes/purple",
+    "f": "minecraft:flint"
   },
   "result": {
     "id": "pickybags:lunchbox",

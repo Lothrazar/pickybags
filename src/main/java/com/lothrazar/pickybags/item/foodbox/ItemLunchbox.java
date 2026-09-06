@@ -88,19 +88,24 @@ public class ItemLunchbox extends ItemCountContents implements IPickupable {
     if (!worldIn.isClientSide() && entityLiving instanceof Player player) {
       IItemHandler handler = com.lothrazar.pickybags.CapabilityUtil.getItemHandler(stack);
       if (handler != null) {
+        int foundSlot = -1;
         ItemStack found = ItemStack.EMPTY;
         //just go left to right and eat in order
         for (int i = 0; i < handler.getSlots(); i++) {
           ItemStack test = handler.getStackInSlot(i);
           if (ItemStackUtil.isEdible(test) && !player.getCooldowns().isOnCooldown(test)) {
             found = test;
+            foundSlot = i;
             break;
           }
         }
         if (!found.isEmpty()) {
           ChatUtil.addServerChatMessage(player, found.getDisplayName());
-          //eat the food
-          found.getItem().finishUsingItem(found, worldIn, entityLiving);
+          // forward to the food's finishUsingItem so mods can apply their own effects;
+          // pass a copy so its in-place shrink doesn't bypass the handler's onContentsChanged
+          found.getItem().finishUsingItem(found.copy(), worldIn, entityLiving);
+          // route the actual consumption through the handler so onContentsChanged fires and the slot persists
+          handler.extractItem(foundSlot, 1, false);
         }
       }
     }

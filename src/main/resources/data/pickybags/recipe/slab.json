@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    {
-      "item": "minecraft:crafting_table"
-    },
-    {
-      "item": "minecraft:smooth_stone"
-    },
-    {
-      "item": "minecraft:flint"
-    }
+    "minecraft:crafting_table",
+    "minecraft:smooth_stone",
+    "minecraft:flint"
   ],
   "result": {
     "id": "pickybags:slab"

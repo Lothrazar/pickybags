@@ -6,15 +6,9 @@
     "ldl"
   ],
   "key": {
-    "l": {
-      "tag": "c:leather"
-    },
-    "c": {
-      "tag": "c:chests/wooden"
-    },
-    "d": {
-      "tag": "minecraft:logs"
-    }
+    "l": "#c:leathers",
+    "c": "#c:chests/wooden",
+    "d": "#minecraft:logs"
   },
   "result": {
     "id": "pickybags:pickup_trees"

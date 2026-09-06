@@ -6,15 +6,9 @@
     "ldl"
   ],
   "key": {
-    "c": {
-      "tag": "c:chests/wooden"
-    },
-    "l": {
-      "tag": "c:leather"
-    },
-    "d": {
-      "tag": "c:seeds"
-    }
+    "c": "#c:chests/wooden",
+    "l": "#c:leathers",
+    "d": "#c:seeds"
   },
   "result": {
     "id": "pickybags:pickup_plants"

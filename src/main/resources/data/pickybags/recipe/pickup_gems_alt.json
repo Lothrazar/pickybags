@@ -6,15 +6,9 @@
     "ldl"
   ],
   "key": {
-    "l": {
-      "tag": "c:leather"
-    },
-    "c": {
-      "tag": "c:chests/wooden"
-    },
-    "d": {
-      "item": "minecraft:copper_ingot"
-    }
+    "l": "#c:leathers",
+    "c": "#c:chests/wooden",
+    "d": "minecraft:copper_ingot"
   },
   "result": {
     "id": "pickybags:pickup_gems"

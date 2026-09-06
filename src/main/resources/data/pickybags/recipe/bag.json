@@ -6,15 +6,9 @@
     "lll"
   ],
   "key": {
-    "s": {
-      "tag": "c:chests/wooden"
-    },
-    "l": {
-      "tag": "c:leather"
-    },
-    "f": {
-      "item": "minecraft:flint"
-    }
+    "s": "#c:chests/wooden",
+    "l": "#c:leathers",
+    "f": "minecraft:flint"
   },
   "result": {
     "id": "pickybags:bag"

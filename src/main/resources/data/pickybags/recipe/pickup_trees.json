@@ -6,18 +6,10 @@
     "wdw"
   ],
   "key": {
-    "w": {
-      "item": "minecraft:red_wool"
-    },
-    "l": {
-      "tag": "c:leather"
-    },
-    "c": {
-      "tag": "c:chests/wooden"
-    },
-    "d": {
-      "tag": "minecraft:logs"
-    }
+    "w": "minecraft:red_wool",
+    "l": "#c:leathers",
+    "c": "#c:chests/wooden",
+    "d": "#minecraft:logs"
   },
   "result": {
     "id": "pickybags:pickup_trees"

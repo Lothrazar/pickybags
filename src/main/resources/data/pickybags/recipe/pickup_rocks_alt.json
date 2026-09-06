@@ -6,15 +6,9 @@
     "ldl"
   ],
   "key": {
-    "l": {
-      "tag": "c:leather"
-    },
-    "c": {
-      "tag": "c:chests/wooden"
-    },
-    "d": {
-      "item": "minecraft:cobblestone"
-    }
+    "l": "#c:leathers",
+    "c": "#c:chests/wooden",
+    "d": "minecraft:cobblestone"
   },
   "result": {
     "id": "pickybags:pickup_rocks"

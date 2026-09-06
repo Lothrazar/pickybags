@@ -25,17 +25,17 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 public class ModBagsRegistry {
   public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModBags.MODID);
 
-  public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, ModBags.MODID);
-  //  public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModBags.MODID);
+  public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ModBags.MODID);
+  //  public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ModBags.MODID);
   //  public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ModBags.MODID);
-  public static final DeferredHolder<Item, Item> SLAB = ITEMS.register("slab", () -> new CraftingSlabItem(new Item.Properties()));
-  public static final DeferredHolder<Item, Item> BAG = ITEMS.register("bag", () -> new BagItem(new Item.Properties()));
-  public static final DeferredHolder<Item, Item> BOX = ITEMS.register("lunchbox", () -> new ItemLunchbox(new Item.Properties().rarity(Rarity.UNCOMMON)));
+  public static final DeferredHolder<Item, Item> SLAB = ITEMS.registerItem("slab", props -> new CraftingSlabItem(props));
+  public static final DeferredHolder<Item, Item> BAG = ITEMS.registerItem("bag", props -> new BagItem(props));
+  public static final DeferredHolder<Item, Item> BOX = ITEMS.registerItem("lunchbox", props -> new ItemLunchbox(props.rarity(Rarity.UNCOMMON)));
   //
-  public static final DeferredHolder<Item, PickupBagItem> PICKUP_ROCKS = ITEMS.register("pickup_rocks", () -> new PickupBagItem(new Item.Properties()));
-  public static final DeferredHolder<Item, PickupBagItem> PICKUP_GEMS = ITEMS.register("pickup_gems", () -> new PickupBagItem(new Item.Properties()));
-  public static final DeferredHolder<Item, PickupBagItem> PICKUP_PLANTS = ITEMS.register("pickup_plants", () -> new PickupBagItem(new Item.Properties()));
-  public static final DeferredHolder<Item, PickupBagItem> PICKUP_TREES = ITEMS.register("pickup_trees", () -> new PickupBagItem(new Item.Properties()));
+  public static final DeferredHolder<Item, PickupBagItem> PICKUP_ROCKS = ITEMS.registerItem("pickup_rocks", props -> new PickupBagItem(props));
+  public static final DeferredHolder<Item, PickupBagItem> PICKUP_GEMS = ITEMS.registerItem("pickup_gems", props -> new PickupBagItem(props));
+  public static final DeferredHolder<Item, PickupBagItem> PICKUP_PLANTS = ITEMS.registerItem("pickup_plants", props -> new PickupBagItem(props));
+  public static final DeferredHolder<Item, PickupBagItem> PICKUP_TREES = ITEMS.registerItem("pickup_trees", props -> new PickupBagItem(props));
   private static final ResourceKey<CreativeModeTab> TAB = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.fromNamespaceAndPath(ModBags.MODID, "tab"));
 
   static {

@@ -6,18 +6,10 @@
     "wdw"
   ],
   "key": {
-    "w": {
-      "item": "minecraft:green_wool"
-    },
-    "c": {
-      "tag": "c:chests/wooden"
-    },
-    "l": {
-      "tag": "c:leather"
-    },
-    "d": {
-      "tag": "c:seeds"
-    }
+    "w": "minecraft:green_wool",
+    "c": "#c:chests/wooden",
+    "l": "#c:leathers",
+    "d": "#c:seeds"
   },
   "result": {
     "id": "pickybags:pickup_plants"
